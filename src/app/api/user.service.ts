@@ -46,17 +46,9 @@ export class UserService {
 
 			this.http.post(this.API_URL + 'login', user, {})
 				.then((data: any) => {
-				    console.log(data.status);
-    				console.log(data.data); // data received by server
-    				console.log(data.headers);
-    				console.log('data');
 				    resolve(JSON.parse(data.data));
 				  })
 				.catch(error => {
-					console.log(error.status);
-				    console.log(error.error); // error message as string
-				    console.log(error.headers);
-				    console.log('error');
 				  	reject(error.error);
 				});
 		});
