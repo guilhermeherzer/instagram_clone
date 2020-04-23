@@ -23,7 +23,7 @@ export class AppComponent {
 
 	initializeApp() {
 		this.platform.ready().then(() => {
-			this.rootPage = this.navCtrl.navigateRoot('login');
+			//this.rootPage = this.navCtrl.navigateRoot('login');
 			this.statusBar.styleDefault();
 			this.splashScreen.hide();
 		});
