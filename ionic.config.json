@@ -1,7 +1,8 @@
 {
   "name": "mejuana",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }
