@@ -7,6 +7,17 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
+	// Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
+  	slideOpts = {
+    	initialSlide: 0,
+    	freeMode: true,
+    	freeModeSticky: true,
+    	speed: 400,
+
+    	slidesPerView: 5.2,
+      	centeredSlides: false,
+  	};
+
   constructor() {}
 
 }

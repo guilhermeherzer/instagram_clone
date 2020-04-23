@@ -1,0 +1,88 @@
+ion-toolbar{
+	max-height:40px !important;
+
+	margin-top: 20px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center
+}
+
+ion-toolbar > ion-button{
+	margin-bottom: 25px;
+}
+
+ion-title{
+	margin-bottom: 20px;
+	text-align: center;
+	font-size: 11pt;
+	font-weight: bold;
+}
+
+.secao-1{
+	background-color: #f2f2f2;
+	border-bottom: solid 2px;
+	border-color: #d9d9d9;
+}
+
+.secao-1 .stories{
+	padding: 10px 0;
+}
+
+.secao-1 .stories ion-slide img{
+	max-width: 56px;
+	border-radius: 50%;
+	display: block;
+}
+
+.secao-1 .stories ion-slide ion-label{
+	display: block;
+	margin-top: 8px;
+	max-width: 56px;
+	font-size: 7pt;
+	border-radius: 50%;
+}
+
+.secao-2 .sub-1{
+	max-height: 59.5px;
+	padding: 16px 40px 16px 16px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	align-items: left
+
+}
+
+.secao-2 .sub-1 div{
+	display: inline-block;
+}
+
+.secao-2 .sub-1 img{
+	width: 32px; 
+	border-radius: 50%;
+}
+
+.secao-2 .sub-1 ion-label{
+	font-size: 14px;
+	display: block;
+}
+
+.secao-2 .sub-3{
+	padding: 0px 16px;
+}
+
+.secao-2 .sub-4{
+	padding: 0px 16px;
+	margin-bottom: 8px;
+}
+
+.secao-2 .sub-5{
+	padding: 0px 16px;
+	margin-bottom: 4px;
+}
+
+.secao-2 .sub-6{
+	padding: 0px 16px;
+}
