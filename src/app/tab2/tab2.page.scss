@@ -1,0 +1,18 @@
+ion-toolbar{
+	max-height:40px !important;
+
+	margin-top: 20px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center
+}
+
+ion-searchbar {
+	margin-bottom: 20px;
+}
+
+ion-content div{
+	display: inline-block;
+}
