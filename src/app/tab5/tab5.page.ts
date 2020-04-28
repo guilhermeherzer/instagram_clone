@@ -9,11 +9,11 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { PostService } from './../api/post.service';
 
 @Component({
-	selector: 'app-tab3',
-	templateUrl: 'tab3.page.html',
-	styleUrls: ['tab3.page.scss']
+	selector: 'app-tab5',
+	templateUrl: 'tab5.page.html',
+	styleUrls: ['tab5.page.scss']
 })
-export class Tab3Page {
+export class Tab5Page {
 
 	public user = [];
 	public meusPosts = [];
