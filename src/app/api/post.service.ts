@@ -29,4 +29,16 @@ export class PostService {
 			});
 		});
 	}
+
+	feed(id: string) {
+		return new Promise((resolve, reject) => {
+			this.http.get(this.API_URL + 'feed/' + id, {}, this.headers)
+			.then((data: any) => {
+				resolve(JSON.parse(data.data));
+			})
+			.catch(error => {
+				reject(JSON.parse(error.error));
+			});
+		});
+	}
 }
