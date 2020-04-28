@@ -43,7 +43,7 @@ export class Tab3Page {
 			.then(data => {
 				this.userId = data.id;
 				this.userName = data.name;
-				this.userImg = data.img;
+				this.userImg = data.user_img;
 
 				this.postService.meusPosts(this.userId)
 					.then((result: any) => {
