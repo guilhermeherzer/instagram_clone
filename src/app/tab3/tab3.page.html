@@ -12,10 +12,10 @@
 <ion-content>
 	<div class="secao-1">
 		<div style="width: 30%">
-			<img src="assets/img/profile-1.jpg" class="img-perfil">
+			<img src="{{ url + userImg }}" class="img-perfil">
 		</div>
 		<div style="width: 70%; min-height: 100%">
-			<ion-label style="display: flex; justify-content: center">Guilherme Rosa</ion-label>
+			<ion-label style="display: flex; justify-content: center">{{ userName }}</ion-label>
 			<ion-button>Editar</ion-button>
 		</div>
 	</div>
@@ -39,9 +39,44 @@
 		</div>
 	</div>
 
-	<div class="secao-4">
-		<img src="assets/img/profile-1.jpg" class="posts-perfil">
-		<img src="assets/img/profile-1.jpg" class="posts-perfil" style="margin-left: 3px;">
-		<img src="assets/img/profile-1.jpg" class="posts-perfil" style="margin-left: 3px;">
+	<div *ngFor="let meuPost of meusPosts;" class="secao-4">
+		<div class="sub-1">
+			<div>
+				<img src="{{ url + userImg }}">
+			</div>
+			<div style="margin-left: 12px;">
+				<ion-label>guilherme.fmr</ion-label>
+				<ion-label>Rio de Janeiro, Rio de Janeiro</ion-label>
+			</div>
+			<div style="position: absolute; right: 0;">
+				<ion-icon name="ellipsis-horizontal-outline" style="width: 40px; padding: 8px;"></ion-icon>
+			</div>
+		</div>		
+		<div class="sub-2">
+			<img src="{{ url + meuPost.img }}">
+		</div>		
+		<div class="sub-3">
+			<ion-button fill="clear">
+				<ion-icon name="heart-outline"></ion-icon>
+			</ion-button>
+			<ion-button fill="clear">
+				<ion-icon name="chatbubbles-outline"></ion-icon>
+			</ion-button>
+			<ion-button fill="clear">
+				<ion-icon name="paper-plane-outline"></ion-icon>
+			</ion-button>
+			<ion-button fill="clear" style="position: absolute; right: 0;">
+				<ion-icon name="bookmark-outline"></ion-icon>
+			</ion-button>
+		</div>		
+		<div class="sub-4">
+			<ion-label style="font-size: 9pt;">Curtido por <strong>guilherme.fmr</strong></ion-label>
+		</div>		
+		<div class="sub-5">
+			<ion-label style="font-size: 9pt;"><strong>guilherme.fmr</strong> {{ meuPost.legenda }}</ion-label>
+		</div>		
+		<div class="sub-6">
+			<ion-label style="font-size: 9pt;"><strong>agathaherzer</strong> Foi lindo mozão! Te amo! s2</ion-label>
+		</div>		
 	</div>
 </ion-content>

@@ -36,7 +36,7 @@ ion-title{
 	text-align: center;
 }
 
-.img-perfil{
+.secao-1 .img-perfil{
 	max-width: 77px;
 	border-radius: 50%;
 }
@@ -64,6 +64,45 @@ ion-title{
 	display: block;
 }
 
-.secao-4 > img{
-	max-width: 123px;
+.secao-4 .sub-1{
+	max-height: 59.5px;
+	padding: 16px 40px 16px 16px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	align-items: left
+
+}
+
+.secao-4 .sub-1 div{
+	display: inline-block;
+}
+
+.secao-4 .sub-1 img{
+	width: 32px; 
+	border-radius: 50%;
+}
+
+.secao-4 .sub-1 ion-label{
+	font-size: 14px;
+	display: block;
+}
+
+.secao-4 .sub-3{
+	padding: 0px 16px;
+}
+
+.secao-4 .sub-4{
+	padding: 0px 16px;
+	margin-bottom: 8px;
+}
+
+.secao-4 .sub-5{
+	padding: 0px 16px;
+	margin-bottom: 4px;
+}
+
+.secao-4 .sub-6{
+	padding: 0px 16px;
 }

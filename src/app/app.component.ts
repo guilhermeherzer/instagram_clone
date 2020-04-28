@@ -23,11 +23,11 @@ export class AppComponent {
 
 	initializeApp() {
 		this.platform.ready().then(() => {
-			/*if(window.localStorage['token']){
+			if(window.localStorage['token']){
         		this.rootPage = this.navCtrl.navigateRoot('/tabs/tab1');
       		}else{
         		this.rootPage = this.navCtrl.navigateRoot('login');
-      		}*/
+      		}
 			this.statusBar.styleDefault();
 			this.splashScreen.hide();
 		});
