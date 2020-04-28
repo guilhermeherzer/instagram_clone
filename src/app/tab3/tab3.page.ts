@@ -47,7 +47,7 @@ export class Tab3Page {
 			.then(data => {
 				this.userId = data.id;
 
-				this.postService.meusPosts(this.userId)
+				this.postService.meuPerfil(this.userId)
 					.then((result: any) => {
 						this.user = result.responseData['user'];
 						this.numPosts = result.responseData['num_posts'];

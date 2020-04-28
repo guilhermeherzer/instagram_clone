@@ -18,9 +18,9 @@ export class PostService {
 
 	constructor(private http: HTTP) { }
 
-	meusPosts(id: string) {
+	meuPerfil(id: string) {
 		return new Promise((resolve, reject) => {
-			this.http.get(this.API_URL + 'meus_posts/' + id, {}, this.headers)
+			this.http.get(this.API_URL + 'meu_perfil/' + id, {}, this.headers)
 			.then((data: any) => {
 				resolve(JSON.parse(data.data));
 			})
