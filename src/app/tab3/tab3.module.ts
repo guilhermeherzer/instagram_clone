@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { NovoPostPageRoutingModule } from './novo-post-routing.module';
+import { Tab3PageRoutingModule } from './tab3-routing.module';
 
-import { NovoPostPage } from './novo-post.page';
+import { Tab3Page } from './tab3.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    NovoPostPageRoutingModule
+    Tab3PageRoutingModule
   ],
-  declarations: [NovoPostPage]
+  declarations: [Tab3Page]
 })
-export class NovoPostPageModule {}
+export class Tab3PageModule {}

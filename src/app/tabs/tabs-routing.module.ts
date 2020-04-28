@@ -16,12 +16,12 @@ const routes: Routes = [
         loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
       },
       {
-        path: 'tab5',
-        loadChildren: () => import('../tab5/tab5.module').then(m => m.Tab5PageModule)
+        path: 'tab3',
+        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
       },
       {
-        path: 'novo-post',
-        loadChildren: () => import('../novo-post/novo-post.module').then(m => m.NovoPostPageModule)
+        path: 'tab5',
+        loadChildren: () => import('../tab5/tab5.module').then(m => m.Tab5PageModule)
       },
       {
         path: '',

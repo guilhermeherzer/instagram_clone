@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { NovoPostPage } from './novo-post.page';
+import { Tab3Page } from './tab3.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: NovoPostPage
+    component: Tab3Page
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class NovoPostPageRoutingModule {}
+export class Tab3PageRoutingModule {}
