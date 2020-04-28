@@ -15,12 +15,16 @@ import { PostService } from './../api/post.service';
 })
 export class Tab3Page {
 
+	public user = [];
 	public meusPosts = [];
+
 	private url = 'http://127.0.0.1:8000/';
 
 	private	userId: string;
-	private userName: string;
-	private userImg: string;
+
+	private numPosts: string;
+	private numSeguidores: string;
+	private numSeguidos: string;
 
 	constructor(public router: Router,
 				public toastCtrl: ToastController,
@@ -42,12 +46,14 @@ export class Tab3Page {
 		this.storage.getItem(name)
 			.then(data => {
 				this.userId = data.id;
-				this.userName = data.name;
-				this.userImg = data.user_img;
 
 				this.postService.meusPosts(this.userId)
 					.then((result: any) => {
-						this.meusPosts = result.responseData['data'];
+						this.user = result.responseData['user'];
+						this.numPosts = result.responseData['num_posts'];
+						this.numSeguidores = result.responseData['num_seguidores'];
+						this.numSeguidos = result.responseData['num_seguidos'];
+						this.meusPosts = result.responseData['posts'];
 					})
 					.catch((error: any) => {
 						console.log(error.error);
