@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-	<div *ngFor="let user of users;" class="secao-1">
+	<div *ngFor="let user of users;" class="secao-1" [routerLink]="['/perfil', user.id]">
 		<div>
 			<img src="{{ url + user.user_img }}">
 		</div>
