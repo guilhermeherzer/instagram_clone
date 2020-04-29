@@ -66,6 +66,18 @@ export class PostService {
 		});
 	}
 
+	desseguir(myId: string, id: string) {
+		return new Promise((resolve, reject) => {
+			this.http.post(this.API_URL + 'desseguir/' + myId + '/' + id, {}, this.headers)
+			.then((data: any) => {
+				resolve(JSON.parse(data.data));
+			})
+			.catch(error => {
+				reject(JSON.parse(error.error));
+			});
+		});
+	}
+
 	buscar(texto: string) {
 		return new Promise((resolve, reject) => {
 			this.http.get(this.API_URL + 'buscar/' + texto, {}, this.headers)

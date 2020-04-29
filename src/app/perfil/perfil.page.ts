@@ -72,17 +72,33 @@ export class PerfilPage implements OnInit {
   	}
 
   	seguir(){
-		this.postService.seguir(this.myId, this.userId)
-			.then((result: any) => {
-				if(result.responseData['success'] == '1'){
-					this.loadPage('data');
-				}else if(result.responseData['success'] == '0'){
-					console.log(result.responseData['success']);
-				}
-			})
-			.catch((error: any) => {
-				console.log(error.error);
-				this.showToast('Erro ao carregar os posts. Erro:' + error.error);
-			});
+  		if(this.statusSeguir['id'] == '0' || this.statusSeguir['id'] == '2'){
+			this.postService.seguir(this.myId, this.userId)
+				.then((result: any) => {
+					if(result.responseData['success'] == '1'){
+						this.loadPage('data');
+					}else if(result.responseData['success'] == '0'){
+						console.log(result.responseData['success']);
+					}
+				})
+				.catch((error: any) => {
+					console.log(error.error);
+					this.showToast('Erro ao tentar seguir. Erro:' + error.error);
+				});
+  		}
+  		else if(this.statusSeguir['id'] == '1'){
+			this.postService.desseguir(this.myId, this.userId)
+				.then((result: any) => {
+					if(result.responseData['success'] == '1'){
+						this.loadPage('data');
+					}else if(result.responseData['success'] == '0'){
+						console.log(result.responseData['success']);
+					}
+				})
+				.catch((error: any) => {
+					console.log(error.error);
+					this.showToast('Erro ao tentar desseguir. Erro:' + error.error);
+				});
+  		}
   	}
 };
