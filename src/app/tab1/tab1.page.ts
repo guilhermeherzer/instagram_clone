@@ -42,6 +42,13 @@ export class Tab1Page {
 
 	}
 
+	doRefresh(event) {
+    	setTimeout(() => {
+    		this.loadPage('data');
+      		event.target.complete();
+    	}, 1000);
+  	}
+
 	async showToast(message: string) {
 		const toast = await this.toastCtrl.create({message, duration: 2000, position: 'bottom' });
 		toast.present();
