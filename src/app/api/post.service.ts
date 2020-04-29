@@ -65,4 +65,16 @@ export class PostService {
 			});
 		});
 	}
+
+	buscar(texto: string) {
+		return new Promise((resolve, reject) => {
+			this.http.get(this.API_URL + 'buscar/' + texto, {}, this.headers)
+			.then((data: any) => {
+				resolve(JSON.parse(data.data));
+			})
+			.catch(error => {
+				reject(JSON.parse(error.error));
+			});
+		});
+	}
 }

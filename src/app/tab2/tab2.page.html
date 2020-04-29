@@ -1,26 +1,17 @@
 <ion-header [translucent]="true">
 	<ion-toolbar>
-		<ion-searchbar></ion-searchbar>
+		<ion-searchbar (ionChange)="buscar()" [(ngModel)]="texto"></ion-searchbar>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-	<div style="margin-right: 2px;">
-		<img src="assets/img/profile-1.jpg" style="width: 123.5px">
-	</div>	
-	<div style="margin-right: 2px;">
-		<img src="assets/img/profile-1.jpg" style="width: 123.5px">
-	</div>	
-	<div>
-		<img src="assets/img/profile-1.jpg" style="width: 123.5px">
-	</div>	
-	<div style="margin-right: 2px;">
-		<img src="assets/img/profile-1.jpg" style="width: 123.5px">
-	</div>	
-	<div style="margin-right: 2px;">
-		<img src="assets/img/profile-1.jpg" style="width: 123.5px">
-	</div>	
-	<div>
-		<img src="assets/img/profile-1.jpg" style="width: 123.5px">
-	</div>	
+	<div *ngFor="let user of users;" class="secao-1">
+		<div>
+			<img src="{{ url + user.user_img }}">
+		</div>
+		<div class="label">
+			<ion-label>{{ user.user }}</ion-label>		
+			<ion-label>{{ user.name }}</ion-label>		
+		</div>
+	</div>
 </ion-content>
