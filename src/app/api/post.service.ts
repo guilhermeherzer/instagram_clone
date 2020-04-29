@@ -41,4 +41,28 @@ export class PostService {
 			});
 		});
 	}
+
+	verPerfil(myId: string, id: string) {
+		return new Promise((resolve, reject) => {
+			this.http.get(this.API_URL + 'ver_perfil/' + myId + '/' + id, {}, this.headers)
+			.then((data: any) => {
+				resolve(JSON.parse(data.data));
+			})
+			.catch(error => {
+				reject(JSON.parse(error.error));
+			});
+		});
+	}
+
+	seguir(myId: string, id: string) {
+		return new Promise((resolve, reject) => {
+			this.http.post(this.API_URL + 'seguir/' + myId + '/' + id, {}, this.headers)
+			.then((data: any) => {
+				resolve(JSON.parse(data.data));
+			})
+			.catch(error => {
+				reject(JSON.parse(error.error));
+			});
+		});
+	}
 }
