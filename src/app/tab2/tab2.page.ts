@@ -17,11 +17,11 @@ export class Tab2Page {
 
 	private url = 'http://127.0.0.1:8000/';
 
-	private	userId: string;
+	private	myId: string;
+
+	private users = [];
 
 	private texto: string;
-
-	public users = [];
 
   	constructor(public router: Router,
 				public toastCtrl: ToastController,
@@ -50,7 +50,7 @@ export class Tab2Page {
   	}
 
   	verPerfil(id: string){
-  		if(id == this.userId){
+  		if(id == this.myId){
   			this.router.navigate(['/tabs/tab5']);
   		}else{
   			this.router.navigate(['/perfil', id]);
@@ -60,7 +60,7 @@ export class Tab2Page {
   	async loadData(name: string){
 		this.storage.getItem(name)
 			.then(data => {
-				this.userId = data.id;
+				this.myId = data.id;
 			})
 			.catch(error => {
 				this.showToast('Erro ao carregar o feed. Erro:' + error.error);
