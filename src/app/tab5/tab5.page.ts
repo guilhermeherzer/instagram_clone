@@ -17,27 +17,24 @@ export class Tab5Page {
 
 	private loading: any;
 
-	public user = [];
-	public meusPosts = [];
-
 	private url = 'http://127.0.0.1:8000/';
 
-	private	userId: string;
+	private	myId: string;
 
+	private user = [];
+	private meusPosts = [];
 	private numPosts: string;
 	private numSeguidores: string;
 	private numSeguidos: string;
 
-	constructor(public router: Router,
+	constructor(private router: Router,
 				private loadingCtrl: LoadingController,
-				public toastCtrl: ToastController,
+				private toastCtrl: ToastController,
 				private storage: NativeStorage,
 				private postService: PostService) { }
 
 	ngOnInit(){
-
 		this.loadPage();
-
 	}
 
 	doRefresh(event) {
@@ -48,7 +45,10 @@ export class Tab5Page {
   	}
 
 	async loadPage(){
-		const loading = await this.loadingCtrl.create({message: "Aguarde..."});
+		const loading = await this.loadingCtrl.create({
+			showBackdrop: false,
+			message: "Aguarde..."
+		});
 
 		await loading.present();
 
@@ -59,9 +59,9 @@ export class Tab5Page {
   		try{
 			this.storage.getItem(name)
 				.then(data => {
-					this.userId = data.id;
+					this.myId = data.id;
 
-					this.postService.meuPerfil(this.userId)
+					this.postService.meuPerfil(this.myId)
 						.then((result: any) => {
 							this.user = result.responseData['user'];
 							this.numPosts = result.responseData['num_posts'];
@@ -77,7 +77,9 @@ export class Tab5Page {
   		}catch(error){
 			console.error(error);
   		}finally{
-  			this.loadingCtrl.dismiss();
+	    	setTimeout(() => {
+	    		this.loadingCtrl.dismiss();
+	    	}, 1000);
   		}
   	}
 
