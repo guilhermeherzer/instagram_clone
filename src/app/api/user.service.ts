@@ -9,11 +9,11 @@ import { Observable } from 'rxjs';
 	providedIn: 'root'
 })
 export class UserService {
-	private API_URL = 'http://127.0.0.1:8000/api/';
+	private API_URL = 'http://192.168.0.127/api/';
 
 	private headers = {
 		'Content-Type': 'application/json',
-		'Accept': 'text/javascript'
+		'Accept': 'application/json'
 	};
 
 	constructor(private http: HTTP) {}

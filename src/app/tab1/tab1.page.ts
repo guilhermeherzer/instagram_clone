@@ -27,7 +27,7 @@ export class Tab1Page {
 	};
 
 	public feed = [];
-	private url = 'http://127.0.0.1:8000/';
+	private url = 'http://192.168.0.127/';
 
 	private	userId: string;
 

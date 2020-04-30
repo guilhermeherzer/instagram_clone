@@ -17,7 +17,7 @@ export class Tab5Page {
 
 	private loading: any;
 
-	private url = 'http://127.0.0.1:8000/';
+	private url = 'http://192.168.0.127/';
 
 	private	myId: string;
 
