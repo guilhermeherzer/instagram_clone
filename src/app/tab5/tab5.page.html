@@ -47,6 +47,17 @@
 		</div>
 	</div>
 
+	<div>
+		<ion-grid>
+			<ion-row>
+				<ion-col size="4" *ngFor="let meuPost of meusPosts;">
+					<div [style.background-image]="'url(' + url + meuPost.img + ')'"></div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</div>
+
+	<!--
 	<div *ngFor="let meuPost of meusPosts;" class="secao-4">
 		<div class="sub-1">
 			<div>
@@ -86,4 +97,5 @@
 			<ion-label style="font-size: 9pt;"><strong>agathaherzer</strong> Foi lindo mozão! Te amo! s2</ion-label>
 		</div>		
 	</div>
+	-->
 </ion-content>
