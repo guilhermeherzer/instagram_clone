@@ -53,7 +53,7 @@ export class Tab2Page {
   		if(id == this.myId){
   			this.router.navigate(['/tabs/tab5']);
   		}else{
-  			this.router.navigate(['/perfil', id]);
+  			this.router.navigate(['/tabs/perfil', id]);
   		}
   	}
 
