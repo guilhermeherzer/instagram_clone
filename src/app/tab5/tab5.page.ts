@@ -52,7 +52,11 @@ export class Tab5Page {
 
 		await loading.present();
 
-		this.loadData('data');
+		try{
+			this.loadData('data');
+		}catch(error){
+			console.error(error);
+		}
 	}
 
   	async loadData(name: string){

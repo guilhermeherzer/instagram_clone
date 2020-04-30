@@ -14,10 +14,10 @@ const routes: Routes = [
 		path: 'cadastro',
 		loadChildren: () => import('./cadastro/cadastro.module').then( m => m.CadastroPageModule)
 	},
-  {
-    path: 'perfil/:userId',
-    loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
-  }
+  	{
+    	path: 'perfil/:userId',
+    	loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
+  	}
 ];
 @NgModule({
 	imports: [
