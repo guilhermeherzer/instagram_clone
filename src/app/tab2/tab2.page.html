@@ -1,11 +1,11 @@
 <ion-header [translucent]="true">
 	<ion-toolbar>
-		<ion-searchbar (ionChange)="buscar()" [(ngModel)]="texto"></ion-searchbar>
+		<ion-searchbar (ionChange)="buscarPerfil()" [(ngModel)]="texto"></ion-searchbar>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-	<div *ngFor="let user of users;" class="secao-1" [routerLink]="['/perfil', user.id]">
+	<div *ngFor="let user of users;" class="secao-1" (click)="verPerfil(user.id)">
 		<div>
 			<img src="{{ url + user.user_img }}">
 		</div>

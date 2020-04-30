@@ -31,7 +31,7 @@ export class Tab2Page {
   	}
 
 	ngOnInit(){
-
+  		this.loadData('data');
 	}
 
 	async showToast(message: string) {
@@ -39,16 +39,31 @@ export class Tab2Page {
 		toast.present();
   	}
 
-  	buscar(){
+  	buscarPerfil(){
 		this.postService.buscar(this.texto)
 			.then((result: any) => {
 				this.users = result.responseData['users'];
-  				console.log(this.users);
-  				console.log(this.texto);
 			})
 			.catch((error: any) => {
-				console.log(error.error);
 				this.showToast('Erro ao carregar o feed. Erro:' + error.error);
 			})
+  	}
+
+  	verPerfil(id: string){
+  		if(id == this.userId){
+  			this.router.navigate(['/tabs/tab5']);
+  		}else{
+  			this.router.navigate(['/perfil', id]);
+  		}
+  	}
+
+  	async loadData(name: string){
+		this.storage.getItem(name)
+			.then(data => {
+				this.userId = data.id;
+			})
+			.catch(error => {
+				this.showToast('Erro ao carregar o feed. Erro:' + error.error);
+			});
   	}
 }
