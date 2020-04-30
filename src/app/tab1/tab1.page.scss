@@ -31,7 +31,7 @@ ion-title{
 }
 
 .secao-1 .stories ion-slide img{
-	max-width: 56px;
+	width: 56px;
 	border-radius: 50%;
 	display: block;
 }
@@ -45,7 +45,7 @@ ion-title{
 }
 
 .secao-2 .sub-1{
-	max-height: 59.5px;
+	height: 59.5px;
 	padding: 16px 40px 16px 16px;
 
 	display: flex;
@@ -67,6 +67,10 @@ ion-title{
 .secao-2 .sub-1 ion-label{
 	font-size: 14px;
 	display: block;
+}
+
+.secao-2 .sub-2 img{
+	width: 100%;
 }
 
 .secao-2 .sub-3{
