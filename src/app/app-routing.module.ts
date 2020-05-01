@@ -13,7 +13,11 @@ const routes: Routes = [
 	{
 		path: 'cadastro',
 		loadChildren: () => import('./cadastro/cadastro.module').then( m => m.CadastroPageModule)
-	}
+	},
+  	{
+    	path: 'comentarios/:postId',
+    	loadChildren: () => import('./comentarios/comentarios.module').then( m => m.ComentariosPageModule)
+  	}
 ];
 @NgModule({
 	imports: [

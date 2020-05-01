@@ -89,4 +89,32 @@ export class PostService {
 			});
 		});
 	}
+
+	comentarios(myId: string, postId: string) {
+		return new Promise((resolve, reject) => {
+			this.http.get(this.API_URL + 'comentarios/' + myId + '/' + postId, {}, this.headers)
+			.then((data: any) => {
+				//console.log(data.data);
+				resolve(JSON.parse(data.data));
+			})
+			.catch(error => {
+				//console.log(error.error);
+				reject(JSON.parse(error.error));
+			});
+		});
+	}
+
+	comentar(postId: string, myId: string, texto: string) {
+		return new Promise((resolve, reject) => {
+			this.http.post(this.API_URL + 'comentar/' + postId + '/' + myId + '/' + texto, {}, this.headers)
+			.then((data: any) => {
+				console.log(data.data);
+				resolve(JSON.parse(data.data));
+			})
+			.catch(error => {
+				console.log(error.error);
+				reject(JSON.parse(error.error));
+			});
+		});
+	}
 }

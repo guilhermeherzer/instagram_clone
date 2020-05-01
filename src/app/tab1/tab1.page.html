@@ -17,8 +17,7 @@
     	<ion-refresher-content
       		pullingIcon="arrow-dropdown"
       		pullingText="Pull to refresh"
-      		refreshingSpinner="circles"
-      		refreshingText="Refreshing...">
+      		refreshingSpinner="circles">
     	</ion-refresher-content>
   	</ion-refresher>
 	<div class="secao-1">
@@ -82,7 +81,7 @@
 			<ion-button fill="clear">
 				<ion-icon name="heart-outline"></ion-icon>
 			</ion-button>
-			<ion-button fill="clear">
+			<ion-button fill="clear" [routerLink]="['/comentarios', post.id]">
 				<ion-icon name="chatbubbles-outline"></ion-icon>
 			</ion-button>
 			<ion-button fill="clear">

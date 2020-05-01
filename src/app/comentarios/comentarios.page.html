@@ -1,0 +1,47 @@
+<ion-header>
+  	<ion-toolbar>
+  		<ion-buttons slot="start">
+      		<ion-back-button></ion-back-button>
+    	</ion-buttons>
+    	<ion-title>Comentários</ion-title>
+  	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-grid class="secao-1">
+		<ion-row class="sub-1">
+			<ion-col size="2">
+				<div class="container" [style.background-image]="'url(' + url + userPostImg + ')'"></div>
+			</ion-col>
+			<ion-col size="10">
+				<ion-label class="comentario"><b class="user-post">{{ userPostUser }}</b>{{ userPostLeg }}</ion-label>
+			</ion-col>
+		</ion-row>
+		<ion-row class="sub-2" *ngFor="let comentario of comentarios;">
+			<ion-col size="2">
+				<div class="container" [style.background-image]="'url(' + url + comentario.comentario.user.user_img + ')'"></div>
+			</ion-col>
+			<ion-col size="10">
+				<ion-label class="comentario"><b class="user-post">{{ comentario.comentario.user.user }}</b>{{ comentario.comentario.texto }}</ion-label>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>
+
+<ion-footer>
+  	<ion-toolbar>
+	  	<ion-grid>
+	  		<ion-row>
+	  			<ion-col size="2">
+	  				<div class="container" [style.background-image]="'url(' + url + userAuthImg + ')'"></div>
+	  			</ion-col>
+	  			<ion-col size="7">
+	  				<ion-textarea rows="1" placeholder="Enter Input" [(ngModel)]="texto"></ion-textarea>
+	  			</ion-col>
+	  			<ion-col size="3">
+	  				<ion-button class="publicar-btn" (click)="comentar()" fill="clear">Publicar</ion-button>
+	  			</ion-col>
+	  		</ion-row>
+	  	</ion-grid>
+  	</ion-toolbar>
+</ion-footer>

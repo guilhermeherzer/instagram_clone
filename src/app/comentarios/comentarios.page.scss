@@ -1,0 +1,45 @@
+.container{
+	background-size: cover;
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+}
+
+.comentario{
+	font-size: 12px;
+	text-align: left;
+}
+
+.comentario .user-post{
+	margin-right: 2px;
+}
+
+ion-footer ion-toolbar{
+	max-height: 50px;
+}
+
+ion-grid{
+	padding: 0;
+	height: 50px;
+	margin-bottom: 10px;
+}
+
+ion-row{
+	height: 100%;
+}
+
+ion-footer ion-toolbar ion-grid ion-row ion-col{
+	height: 100%;
+  	display: flex;
+  	align-items: center;
+	justify-content: center;
+}
+
+.publicar-btn{
+	--background: transparent;
+	--border-style: none;
+	--box-shadow: none;
+	color: #e6e6ff;
+	text-transform: none;
+
+}
