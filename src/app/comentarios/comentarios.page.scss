@@ -5,12 +5,27 @@
 	border-radius: 50%;
 }
 
-.comentario{
+.secao-1{
+	padding: 5px 10px;
+	max-height: 100%;
+}
+
+.secao-1 .sub-1{
+	border-bottom: solid;
+	border-color: #e6e6e6;
+	border-width: 1px;
+}
+
+.secao-1 .sub-2{
+	margin-bottom: 10px;
+}
+
+.secao-1 .comentario{
 	font-size: 12px;
 	text-align: left;
 }
 
-.comentario .user-post{
+.secao-1 .comentario .user-post{
 	margin-right: 2px;
 }
 
@@ -18,13 +33,13 @@ ion-footer ion-toolbar{
 	max-height: 50px;
 }
 
-ion-grid{
+ion-footer ion-toolbar ion-grid{
 	padding: 0;
 	height: 50px;
 	margin-bottom: 10px;
 }
 
-ion-row{
+ion-footer ion-toolbar ion-grid ion-row{
 	height: 100%;
 }
 
