@@ -36,7 +36,7 @@
 	  				<div class="container" [style.background-image]="'url(' + url + userAuthImg + ')'"></div>
 	  			</ion-col>
 	  			<ion-col size="7">
-	  				<ion-textarea rows="1" placeholder="Enter Input" [(ngModel)]="texto"></ion-textarea>
+	  				<ion-textarea class="texto" rows="1" placeholder="Adicione um comentário..." [(ngModel)]="texto"></ion-textarea>
 	  			</ion-col>
 	  			<ion-col size="3">
 	  				<ion-button class="publicar-btn" (click)="comentar()" fill="clear">Publicar</ion-button>
