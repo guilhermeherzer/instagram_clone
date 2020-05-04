@@ -30,9 +30,9 @@ export class PostService {
 		});
 	}
 
-	feed(id: string) {
+	feed(myId: string) {
 		return new Promise((resolve, reject) => {
-			this.http.get(this.API_URL + 'feed/' + id, {}, this.headers)
+			this.http.get(this.API_URL + 'feed/' + myId, {}, this.headers)
 			.then((data: any) => {
 				resolve(JSON.parse(data.data));
 			})

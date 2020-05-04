@@ -26,7 +26,10 @@ export class Tab1Page {
 			centeredSlides: false,
 	};
 
-	private feed = [];
+	private user: string;
+	private userImg: string;
+	private stories = [];
+	private posts = [];
 	private url = 'http://192.168.0.127/';
 
 	private	myId: string;
@@ -72,7 +75,10 @@ export class Tab1Page {
 
 					this.postService.feed(this.myId)
 						.then((result: any) => {
-							this.feed = result.responseData['data'];
+							this.user = result.responseData['data'].user;
+							this.userImg = result.responseData['data'].img;
+							this.stories = result.responseData['data']['stories'];
+							this.posts = result.responseData['data']['posts'];
 						})
 						.catch((error: any) => {
 							this.showToast('Erro ao carregar o feed. Erro:' + error.error);

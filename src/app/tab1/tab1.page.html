@@ -23,45 +23,30 @@
 	<div class="secao-1">
 		<ion-slides [options]="slideOpts" class="stories">
 			<ion-slide>
-				<div>
-					<img src="assets/img/profile-1.jpg">
-					<ion-label>guilherme.f...</ion-label>
+				<div class="col">
+					<div>
+						<div class="storie-user-img">
+							<div class="container" [style.background-image]="'url(' + url + userImg + ')'"></div>
+							
+						</div>
+						<ion-label>Seu story</ion-label>
+					</div>
 				</div>
 			</ion-slide>
-			<ion-slide>
-				<div>
-					<img src="assets/img/profile-1.jpg">
-					<ion-label>guilherme.f...</ion-label>
-				</div>
-			</ion-slide>
-			<ion-slide>
-				<div>
-					<img src="assets/img/profile-1.jpg">
-					<ion-label>guilherme.f...</ion-label>
-				</div>
-			</ion-slide>
-			<ion-slide>
-				<div>
-					<img src="assets/img/profile-1.jpg">
-					<ion-label>guilherme.f...</ion-label>
-				</div>
-			</ion-slide>
-			<ion-slide>
-				<div>
-					<img src="assets/img/profile-1.jpg">
-					<ion-label>guilherme.f...</ion-label>
-				</div>
-			</ion-slide>
-			<ion-slide>
-				<div>
-					<img src="assets/img/profile-1.jpg">
-					<ion-label>guilherme.f...</ion-label>
+			<ion-slide *ngFor="let storie of stories;">
+				<div class="col">
+					<div>
+						<div class="storie-user-img gradient-border">
+							<div class="container" [style.background-image]="'url(' + url + storie.user_img + ')'"></div>
+						</div>
+						<ion-label>{{ storie.user }}</ion-label>
+					</div>
 				</div>
 			</ion-slide>
 		</ion-slides>
 	</div>
 
-	<div class="secao-2" *ngFor="let post of feed;">
+	<div class="secao-2" *ngFor="let post of posts;">
 		<div class="sub-1">
 			<div (click)="verPerfil(post.id)">
 				<img src="{{ url + post.img }}">
