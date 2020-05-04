@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 
-import { Platform, NavController } from '@ionic/angular';
+import { Platform, ToastController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
 	selector: 'app-root',
@@ -16,7 +18,9 @@ export class AppComponent {
 		private platform: Platform,
 		private splashScreen: SplashScreen,
 		private statusBar: StatusBar,
-		private navCtrl: NavController
+		private toastCtrl: ToastController,
+		private navCtrl: NavController,
+		private storage: NativeStorage
 	) {
 		this.initializeApp();
 	}
@@ -26,10 +30,22 @@ export class AppComponent {
 			if(window.localStorage['token']){
         		this.rootPage = this.navCtrl.navigateRoot('/tabs/tab1');
       		}else{
-        		this.rootPage = this.navCtrl.navigateRoot('login');
+        		this.rootPage = this.navCtrl.navigateRoot('/login');
       		}
 			this.statusBar.styleDefault();
 			this.splashScreen.hide();
 		});
 	}
+
+	logout(){
+		window.localStorage.removeItem('token');
+		window.localStorage.removeItem('data');
+		this.navCtrl.navigateRoot('/login');
+		this.showToast('Deslogado com sucesso.');
+	}
+
+	async showToast(message: string) {
+		const toast = await this.toastCtrl.create({message, duration: 2000, position: 'bottom' });
+		toast.present();
+  	}
 }
