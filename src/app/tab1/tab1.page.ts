@@ -29,7 +29,7 @@ export class Tab1Page {
 	public feed = [];
 	private url = 'http://192.168.0.127/';
 
-	private	userId: string;
+	private	myId: string;
 
 	constructor(public router: Router,
 				public toastCtrl: ToastController,
@@ -57,9 +57,9 @@ export class Tab1Page {
   	async loadPage(name: string){
 		this.storage.getItem(name)
 			.then(data => {
-				this.userId = data.id;
+				this.myId = data.id;
 
-				this.postService.feed(this.userId)
+				this.postService.feed(this.myId)
 					.then((result: any) => {
 						this.feed = result.responseData['data'];
 					})
@@ -68,5 +68,13 @@ export class Tab1Page {
 						this.showToast('Erro ao carregar o feed. Erro:' + error.error);
 					})
 			});
+  	}
+
+  	verPerfil(id: string){
+  		if(id == this.myId){
+  			this.router.navigate(['/tabs/tab5']);
+  		}else{
+  			this.router.navigate(['/tabs/perfil', id]);
+  		}
   	}
 }
