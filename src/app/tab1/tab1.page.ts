@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 
-import { ToastController } from '@ionic/angular';
+import { Platform, ToastController, LoadingController } from '@ionic/angular';
 
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
@@ -26,25 +26,25 @@ export class Tab1Page {
 			centeredSlides: false,
 	};
 
-	public feed = [];
+	private feed = [];
 	private url = 'http://192.168.0.127/';
 
 	private	myId: string;
 
-	constructor(public router: Router,
-				public toastCtrl: ToastController,
+	constructor(private router: Router,
+				private platform: Platform,
+				private toastCtrl: ToastController,
+				private loadingCtrl: LoadingController,
 				private storage: NativeStorage,
 				private postService: PostService) {}
 
 	ngOnInit(){
-
-		this.loadPage('data');
-
+		this.loadPage();
 	}
 
 	doRefresh(event) {
     	setTimeout(() => {
-    		this.loadPage('data');
+    		this.loadPage();
       		event.target.complete();
     	}, 1000);
   	}
@@ -54,20 +54,36 @@ export class Tab1Page {
 		toast.present();
   	}
 
-  	async loadPage(name: string){
-		this.storage.getItem(name)
-			.then(data => {
-				this.myId = data.id;
+  	async loadPage(){
+		this.loadingCtrl.create({
+			message:"",
+			showBackdrop:false,
+		}).then((loadingElement) => {
+			loadingElement.present();
+			this.loadData('data');
+		})
+  	}
 
-				this.postService.feed(this.myId)
-					.then((result: any) => {
-						this.feed = result.responseData['data'];
-					})
-					.catch((error: any) => {
-						console.log(error.error);
-						this.showToast('Erro ao carregar o feed. Erro:' + error.error);
-					})
-			});
+  	async loadData(name: string){
+  		try{
+			this.storage.getItem(name)
+				.then(data => {
+					this.myId = data.id;
+
+					this.postService.feed(this.myId)
+						.then((result: any) => {
+							this.feed = result.responseData['data'];
+						})
+						.catch((error: any) => {
+							console.log(error.error);
+							this.showToast('Erro ao carregar o feed. Erro:' + error.error);
+						})
+				});
+  		}catch(error){
+  			console.log(error.error);
+  		}finally{
+			this.loadingCtrl.dismiss();
+  		}
   	}
 
   	verPerfil(id: string){
