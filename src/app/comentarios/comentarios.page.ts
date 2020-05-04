@@ -22,13 +22,15 @@ export class ComentariosPage implements OnInit {
 	private	myId: string;
 	private	postId: string;
 
-	private	userAuthImg: string;
-	private	userPostImg: string;
-	private	userPostUser: string;
-	private	userPostLeg: string;
-	private	comentarios: [];
+	private	username: string;
+	private	profilePicUrl: string;
+	private	legenda: string;
 
-	private	texto: string;
+	private	comentarios: [];
+	
+	private	authProfilePicUrl: string;
+
+	private texto: string;
 
   	constructor(private route: ActivatedRoute,
   				private router: Router,
@@ -91,12 +93,12 @@ export class ComentariosPage implements OnInit {
 
 					this.postService.comentarios(this.myId, this.postId)
 						.then((result: any) => {
-							this.userAuthImg = result.responseData['user_auth']['user_img'];
-							this.userPostImg = result.responseData['post']['user']['user_img'];
-							this.userPostUser = result.responseData['post']['user']['user'];
-							this.userPostLeg = result.responseData['post']['legenda'];
+							this.username = result.responseData['data']['owner_post']['username'];
+							this.profilePicUrl = result.responseData['data']['owner_post']['profile_pic_url'];
+							this.legenda = result.responseData['data']['legenda'];
 
-							this.comentarios = result.responseData['comentarios'];
+							this.comentarios = result.responseData['data']['comentarios'];
+							this.authProfilePicUrl = result.responseData['data']['user_auth']['profile_pic_url'];
 						})
 						.catch((error: any) => {
 							console.log(error.error);

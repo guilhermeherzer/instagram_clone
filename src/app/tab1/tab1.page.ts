@@ -75,8 +75,8 @@ export class Tab1Page {
 
 					this.postService.feed(this.myId)
 						.then((result: any) => {
-							this.user = result.responseData['data'].user;
-							this.userImg = result.responseData['data'].img;
+							//this.user = result.responseData['data'].user;
+							//this.userImg = result.responseData['data'].img;
 							this.stories = result.responseData['data']['stories'];
 							this.posts = result.responseData['data']['posts'];
 						})
