@@ -114,4 +114,12 @@ export class ComentariosPage implements OnInit {
 		const toast = await this.toastCtrl.create({message, duration: 2000, position: 'bottom' });
 		toast.present();
   	}
+
+  	verPerfil(id: string){
+  		if(id == this.myId){
+  			this.router.navigate(['/tabs/tab5']);
+  		}else{
+  			this.router.navigate(['/tabs/perfil', id]);
+  		}
+  	}
 }

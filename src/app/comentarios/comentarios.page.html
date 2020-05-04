@@ -18,7 +18,7 @@
 			</ion-col>
 		</ion-row>
 		<ion-row class="sub-2" *ngFor="let comentario of comentarios;">
-			<ion-col size="2">
+			<ion-col size="2" (click)="verPerfil(comentario.comentario.user.id)">
 				<div class="container" [style.background-image]="'url(' + url + comentario.comentario.user.user_img + ')'"></div>
 			</ion-col>
 			<ion-col size="10">
