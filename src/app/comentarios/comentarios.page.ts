@@ -69,18 +69,15 @@ export class ComentariosPage implements OnInit {
   	}
 
 	async loadPage(){
-		const loading = await this.loadingCtrl.create({
-			showBackdrop: false
-		});
-
-		await loading.present();
-
-		try{
+		this.loadingCtrl.create({
+			message:"",
+			showBackdrop:false,
+		}).then((loadingElement) => {
+			loadingElement.present();
 			this.loadData('data');
-		}catch(error){
-			console.error(error);
-		}
-	}
+		})
+  	}
+
 
   	async loadData(name: string){
   		try{
@@ -109,9 +106,7 @@ export class ComentariosPage implements OnInit {
   		}catch(error){
 			console.error(error);
   		}finally{
-	    	setTimeout(() => {
-	    		this.loadingCtrl.dismiss();
-	    	}, 1000);
+	    	this.loadingCtrl.dismiss();
   		}
   	}
 
