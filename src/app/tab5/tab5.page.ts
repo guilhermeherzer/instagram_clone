@@ -44,20 +44,15 @@ export class Tab5Page {
     	}, 1000);
   	}
 
-	async loadPage(){
-		const loading = await this.loadingCtrl.create({
-			showBackdrop: false,
-			message: "Aguarde..."
-		});
-
-		await loading.present();
-
-		try{
+  	async loadPage(){
+		this.loadingCtrl.create({
+			message:"",
+			showBackdrop:false,
+		}).then((loadingElement) => {
+			loadingElement.present();
 			this.loadData('data');
-		}catch(error){
-			console.error(error);
-		}
-	}
+		})
+  	}
 
   	async loadData(name: string){
   		try{
@@ -81,9 +76,7 @@ export class Tab5Page {
   		}catch(error){
 			console.error(error);
   		}finally{
-	    	setTimeout(() => {
-	    		this.loadingCtrl.dismiss();
-	    	}, 1000);
+	    	this.loadingCtrl.dismiss();
   		}
   	}
 
