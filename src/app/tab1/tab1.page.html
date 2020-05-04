@@ -63,8 +63,8 @@
 
 	<div class="secao-2" *ngFor="let post of feed;">
 		<div class="sub-1">
-			<div (click)="verPerfil(post.user_id)">
-				<img src="{{ url + post.user_img }}">
+			<div (click)="verPerfil(post.id)">
+				<img src="{{ url + post.img }}">
 			</div>
 			<div style="margin-left: 12px;">
 				<ion-label>{{ post.user }}</ion-label>
@@ -75,13 +75,13 @@
 			</div>
 		</div>		
 		<div class="sub-2">
-			<img src="{{ url + post.img }}">
+			<img src="{{ url + post.post.img }}">
 		</div>		
 		<div class="sub-3">
 			<ion-button fill="clear">
 				<ion-icon name="heart-outline"></ion-icon>
 			</ion-button>
-			<ion-button fill="clear" [routerLink]="['/comentarios', post.id]">
+			<ion-button fill="clear" [routerLink]="['/comentarios', post.post.id]">
 				<ion-icon name="chatbubbles-outline"></ion-icon>
 			</ion-button>
 			<ion-button fill="clear">
@@ -95,10 +95,10 @@
 			<ion-label style="font-size: 9pt;">Curtido por <strong>guilherme.fmr</strong></ion-label>
 		</div>		
 		<div class="sub-5">
-			<ion-label style="font-size: 9pt;"><strong>{{ post.user }}</strong> {{ post.legenda }}</ion-label>
+			<ion-label style="font-size: 9pt;"><strong>{{ post.user }}</strong> {{ post.post.legenda }}</ion-label>
 		</div>		
-		<div class="sub-6">
-			<ion-label style="font-size: 9pt;"><strong>agathaherzer</strong> Foi lindo mozão! Te amo! s2</ion-label>
+		<div class="sub-6" *ngFor="let comentario of post.post.comentarios;">
+			<ion-label style="font-size: 9pt;"><strong>{{ comentario.user.user }}</strong> {{ comentario.texto }}</ion-label>
 		</div>		
 	</div>
 </ion-content>

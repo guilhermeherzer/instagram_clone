@@ -75,7 +75,6 @@ export class Tab1Page {
 							this.feed = result.responseData['data'];
 						})
 						.catch((error: any) => {
-							console.log(error.error);
 							this.showToast('Erro ao carregar o feed. Erro:' + error.error);
 						})
 				});
