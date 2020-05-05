@@ -50,44 +50,64 @@
 	</div>
 	
 
-	<div class="secao-2" *ngFor="let post of posts;">
-		<div class="sub-1">
-			<div (click)="verPerfil(post.owner_post.id)">
-				<img src="{{ url + post.owner_post.profile_pic_url }}">
-			</div>
-			<div style="margin-left: 12px;">
-				<ion-label>{{ post.user }}</ion-label>
-				<ion-label>Rio de Janeiro, Rio de Janeiro</ion-label>
-			</div>
-			<div style="position: absolute; right: 0;">
-				<ion-icon name="ellipsis-horizontal-outline" style="width: 40px; padding: 8px;"></ion-icon>
-			</div>
-		</div>		
-		<div class="sub-2">
-			<img src="{{ url + post.display_url }}">
-		</div>		
-		<div class="sub-3">
-			<ion-button fill="clear">
-				<ion-icon name="heart-outline"></ion-icon>
-			</ion-button>
-			<ion-button fill="clear" [routerLink]="['/comentarios', post.id]">
-				<ion-icon name="chatbubbles-outline"></ion-icon>
-			</ion-button>
-			<ion-button fill="clear">
-				<ion-icon name="paper-plane-outline"></ion-icon>
-			</ion-button>
-			<ion-button fill="clear" style="position: absolute; right: 0;">
-				<ion-icon name="bookmark-outline"></ion-icon>
-			</ion-button>
-		</div>		
-		<div class="sub-4">
-			<ion-label style="font-size: 9pt;">Curtido por <strong>guilherme.fmr</strong></ion-label>
-		</div>		
-		<div class="sub-5">
-			<ion-label style="font-size: 9pt;"><strong>{{ post.owner_post.username }}</strong> {{ post.legenda }}</ion-label>
-		</div>		
-		<div class="sub-6" *ngFor="let comentario of post.comentarios;">
-			<ion-label style="font-size: 9pt;"><strong>{{ comentario.user.username }}</strong> {{ comentario.texto }}</ion-label>
-		</div>		
-	</div>
+	<ion-grid class="secao-2" *ngFor="let post of posts;">
+		<ion-row class="sub-1">
+			<ion-col size="1.5" (click)="verPerfil(post.owner_post.id)">
+				<div class="profile-pic-url" [style.background-image]="'url(' + url + post.owner_post.profile_pic_url + ')'"></div>
+			</ion-col>
+			<ion-col size="9.5">
+				<ion-label class="username">{{ post.owner_post.username }}</ion-label>
+			</ion-col>
+			<ion-col size="1">
+				<ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+			</ion-col>
+		</ion-row>
+		<ion-row class="sub-2">
+			<ion-col>
+				<img src="{{ url + post.display_url }}">
+			</ion-col>
+		</ion-row>
+		<ion-row class="sub-3">
+			<ion-col size="2">
+				<ion-button fill="clear">
+					<ion-icon name="heart-outline"></ion-icon>
+				</ion-button>
+			</ion-col>
+			<ion-col size="2">
+				<ion-button fill="clear" [routerLink]="['/comentarios', post.id]">
+					<ion-icon name="chatbubbles-outline"></ion-icon>
+				</ion-button>
+			</ion-col>
+			<ion-col size="2">
+				<ion-button fill="clear">
+					<ion-icon name="paper-plane-outline"></ion-icon>
+				</ion-button>
+			</ion-col>
+			<ion-col size="2" offset="4">
+				<ion-button fill="clear">
+					<ion-icon name="bookmark-outline"></ion-icon>
+				</ion-button>
+			</ion-col>
+		</ion-row>
+		<ion-row class="sub-4">
+			<ion-col>
+				<ion-label>Curtido por <strong>guilherme.fmr</strong></ion-label>
+			</ion-col>
+		</ion-row>
+		<ion-row class="sub-5">
+			<ion-col>
+				<ion-label><strong>{{ post.owner_post.username }}</strong> {{ post.legenda }}</ion-label>
+			</ion-col>
+		</ion-row>
+		<ion-row class="sub-6">
+			<ion-col>
+				<ion-label [routerLink]="['/comentarios', post.id]">Ver todos os {{ post.comentarios_contagem }} comentários</ion-label>
+			</ion-col>
+		</ion-row>
+		<ion-row class="sub-7" *ngFor="let comentario of post.comentarios | slice:0:2;">
+			<ion-col>
+				<ion-label><strong>{{ comentario.user.username }}</strong> {{ comentario.texto }}</ion-label>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </ion-content>

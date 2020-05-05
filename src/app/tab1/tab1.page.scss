@@ -1,3 +1,5 @@
+/* Stories */
+
 .secao-1{
 	border-bottom: solid 1px;
 	border-color: #d9d9d9;
@@ -60,49 +62,42 @@
 	border-radius: 50%;
 }
 
+/* Posts */
+
+.secao-2,
+.secao-2 ion-col{
+	padding: 0;
+}
+
 .secao-2 .sub-1{
-	height: 59.5px;
-	padding: 16px 40px 16px 16px;
-
 	display: flex;
-	flex-direction: row;
-	justify-content: left;
-	align-items: left
+  	align-items: center;
+	justify-content: center;
 
+	height: 50px;
+	padding: 5px 10px;
 }
 
-.secao-2 .sub-1 div{
-	display: inline-block;
-}
-
-.secao-2 .sub-1 img{
-	width: 32px; 
+.secao-2 .sub-1 .profile-pic-url{
+	background-size: cover;
+	width: 30px;
+	height: 30px;
 	border-radius: 50%;
 }
 
-.secao-2 .sub-1 ion-label{
-	font-size: 14px;
-	display: block;
+.secao-2 .sub-1 .username{
+	font-size: 13px;
+	font-weight: bold;
 }
 
-.secao-2 .sub-2 img{
-	width: 100%;
+.secao-2 .sub-4,
+.secao-2 .sub-5,
+.secao-2 .sub-6,
+.secao-2 .sub-7,{
+	padding: 2px 10px;
+	font-size: 12px;
 }
 
-.secao-2 .sub-3{
-	padding: 0px 16px;
-}
-
-.secao-2 .sub-4{
-	padding: 0px 16px;
-	margin-bottom: 8px;
-}
-
-.secao-2 .sub-5{
-	padding: 0px 16px;
-	margin-bottom: 4px;
-}
-
-.secao-2 .sub-6{
-	padding: 0px 16px;
+.secao-2 .sub-6 ion-label{
+	color: gray;
 }
