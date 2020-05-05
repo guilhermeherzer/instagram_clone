@@ -50,7 +50,7 @@
 	</div>
 	
 
-	<ion-grid class="secao-2" *ngFor="let post of posts;">
+	<ion-grid class="secao-2" *ngFor="let post of posts; let i=index">
 		<ion-row class="sub-1">
 			<ion-col size="1.5" (click)="verPerfil(post.owner_post.id)">
 				<div class="profile-pic-url" [style.background-image]="'url(' + url + post.owner_post.profile_pic_url + ')'"></div>
@@ -69,8 +69,8 @@
 		</ion-row>
 		<ion-row class="sub-3">
 			<ion-col size="2">
-				<ion-button fill="clear">
-					<ion-icon name="heart-outline"></ion-icon>
+				<ion-button fill="clear" (click)="like(post.id, i)">
+					<div [class]="heartType[i] ? 'descurtir' : 'curtir'"></div>
 				</ion-button>
 			</ion-col>
 			<ion-col size="2">

@@ -26,13 +26,11 @@ export class Tab1Page {
 			centeredSlides: false,
 	};
 
-	private user: string;
-	private userImg: string;
-	private stories = [];
-	private posts = [];
-	private url = 'http://192.168.0.127/';
-
-	private	myId: string;
+	private url = 'http://192.168.0.127/'
+	private	myId: string
+	private stories = []
+	private posts = []
+	private heartType: any[] = []
 
 	constructor(private router: Router,
 				private platform: Platform,
@@ -42,19 +40,19 @@ export class Tab1Page {
 				private postService: PostService) {}
 
 	ngOnInit(){
-		this.loadPage();
+		this.loadPage()
 	}
 
 	doRefresh(event) {
     	setTimeout(() => {
-    		this.loadPage();
-      		event.target.complete();
-    	}, 1000);
+    		this.loadPage()
+      		event.target.complete()
+    	}, 1000)
   	}
 
 	async showToast(message: string) {
-		const toast = await this.toastCtrl.create({message, duration: 2000, position: 'bottom' });
-		toast.present();
+		const toast = await this.toastCtrl.create({message, duration: 2000, position: 'bottom' })
+		toast.present()
   	}
 
   	async loadPage(){
@@ -62,8 +60,8 @@ export class Tab1Page {
 			message:"",
 			showBackdrop:false,
 		}).then((loadingElement) => {
-			loadingElement.present();
-			this.loadData('data');
+			loadingElement.present()
+			this.loadData('data')
 		})
   	}
 
@@ -71,31 +69,44 @@ export class Tab1Page {
   		try{
 			this.storage.getItem(name)
 				.then(data => {
-					this.myId = data.id;
+					this.myId = data.id
 
 					this.postService.feed(this.myId)
 						.then((result: any) => {
-							//this.user = result.responseData['data'].user;
-							//this.userImg = result.responseData['data'].img;
-							this.stories = result.responseData['data']['stories'];
-							this.posts = result.responseData['data']['posts'];
+							this.stories = result.responseData['data']['stories']
+							this.posts = result.responseData['data']['posts']
+							for(let i = 0; i < result.responseData['data']['posts'].length; i++){
+								this.heartType[i] = this.posts[i].is_liked
+							}
 						})
 						.catch((error: any) => {
 							this.showToast('Erro ao carregar o feed. Erro:' + error.error);
+							console.log(error)
 						})
 				});
   		}catch(error){
-  			console.log(error.error);
+  			console.log(error.error)
   		}finally{
-			this.loadingCtrl.dismiss();
+			this.loadingCtrl.dismiss()
   		}
   	}
 
   	verPerfil(id: string){
   		if(id == this.myId){
-  			this.router.navigate(['/tabs/tab5']);
+  			this.router.navigate(['/tabs/tab5'])
   		}else{
-  			this.router.navigate(['/tabs/perfil', id]);
+  			this.router.navigate(['/tabs/perfil', id])
   		}
   	}
+
+
+	like(postId, i){
+		this.postService.like(postId, this.myId)
+			.then((result: any) => {
+				this.heartType[i] = result.responseData['is_liked']
+			})
+			.catch((error: any) => {
+				this.showToast('Erro ao curtir a postagem. Erro:' + error.error);
+			})
+	}
 }

@@ -98,6 +98,20 @@
 	font-size: 12px;
 }
 
+.secao-2 .sub-3 .curtir{
+	background-image: url('http://localhost/assets/icons/like.png');
+	background-size: cover;
+	height: 24px;
+	width: 24px;
+}
+
+.secao-2 .sub-3 .descurtir{
+	background-image: url('http://localhost/assets/icons/deslike.png');
+	background-size: cover;
+	height: 24px;
+	width: 24px;
+}
+
 .secao-2 .sub-6 ion-label{
 	color: gray;
 }
