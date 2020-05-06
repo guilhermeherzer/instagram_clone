@@ -57,12 +57,8 @@ export class ComentariosPage implements OnInit {
   		console.log(this.texto);
 		this.postService.comentar(this.postId, this.myId, this.texto)
 			.then((result: any) => {
-				if(result.responseData['success'] == '1'){
-					this.texto = '';
-					this.loadPage();
-				}else if(result.responseData['success'] == '0'){
-					console.log(result.responseData['success']);
-				}
+				this.texto = '';
+				this.comentarios = result.responseData['data']['comentarios'];
 			})
 			.catch((error: any) => {
 				console.log(error.error);
