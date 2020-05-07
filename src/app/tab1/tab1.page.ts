@@ -101,7 +101,7 @@ export class Tab1Page {
 
 
 	like(postId, i){
-		this.postService.like(postId, this.myId)
+		this.postService.like(postId)
 			.then((result: any) => {
 				this.heartType[i] = result.responseData['is_liked']
 			})

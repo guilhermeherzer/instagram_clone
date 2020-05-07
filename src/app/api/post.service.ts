@@ -115,9 +115,9 @@ export class PostService {
 		});
 	}
 
-	like(postId: string, myId: string) {
+	like(postId: string) {
 		return new Promise((resolve, reject) => {
-			this.http.post(this.API_URL + 'like/' + postId + '/' + myId, {}, this.headers)
+			this.http.post(this.API_URL + 'like/' + postId, {}, this.headers)
 			.then((data: any) => {
 				resolve(JSON.parse(data.data));
 			})
