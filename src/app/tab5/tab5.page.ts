@@ -60,7 +60,7 @@ export class Tab5Page {
 				.then(data => {
 					this.myId = data.id;
 
-					this.postService.meuPerfil(this.myId)
+					this.postService.meuPerfil()
 						.then((result: any) => {
 							this.user = result.responseData['user'];
 							this.numPosts = result.responseData['num_posts'];
