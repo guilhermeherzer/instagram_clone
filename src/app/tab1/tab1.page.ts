@@ -71,7 +71,7 @@ export class Tab1Page {
 				.then(data => {
 					this.myId = data.id
 
-					this.postService.feed(this.myId)
+					this.postService.feed()
 						.then((result: any) => {
 							this.stories = result.responseData['data']['stories']
 							this.posts = result.responseData['data']['posts']
