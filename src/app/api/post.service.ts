@@ -91,9 +91,9 @@ export class PostService {
 		});
 	}
 
-	comentarios(myId: string, postId: string) {
+	comentarios(postId: string) {
 		return new Promise((resolve, reject) => {
-			this.http.get(this.API_URL + 'comentarios/' + myId + '/' + postId, {}, this.headers)
+			this.http.get(this.API_URL + 'comentarios/' + postId, {}, this.headers)
 			.then((data: any) => {
 				resolve(JSON.parse(data.data));
 			})
@@ -103,9 +103,9 @@ export class PostService {
 		});
 	}
 
-	comentar(postId: string, myId: string, texto: string) {
+	comentar(postId: string, texto: string) {
 		return new Promise((resolve, reject) => {
-			this.http.post(this.API_URL + 'comentar/' + postId + '/' + myId + '/' + texto, {}, this.headers)
+			this.http.post(this.API_URL + 'comentar/' + postId + '/' + texto, {}, this.headers)
 			.then((data: any) => {
 				resolve(JSON.parse(data.data));
 			})

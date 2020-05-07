@@ -55,7 +55,7 @@ export class ComentariosPage implements OnInit {
 
   	comentar(){
   		console.log(this.texto);
-		this.postService.comentar(this.postId, this.myId, this.texto)
+		this.postService.comentar(this.postId, this.texto)
 			.then((result: any) => {
 				this.texto = '';
 				this.comentarios = result.responseData['data']['comentarios'];
@@ -87,7 +87,7 @@ export class ComentariosPage implements OnInit {
 		    				this.postId = params.get('postId');
 		  			});
 
-					this.postService.comentarios(this.myId, this.postId)
+					this.postService.comentarios(this.postId)
 						.then((result: any) => {
 							this.username = result.responseData['data']['owner_post']['username'];
 							this.profilePicUrl = result.responseData['data']['owner_post']['profile_pic_url'];
