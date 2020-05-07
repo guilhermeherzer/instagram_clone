@@ -55,9 +55,9 @@ export class PostService {
 		});
 	}
 
-	seguir(myId: string, id: string) {
+	seguir(id: string) {
 		return new Promise((resolve, reject) => {
-			this.http.post(this.API_URL + 'seguir/' + myId + '/' + id, {}, this.headers)
+			this.http.post(this.API_URL + 'seguir/' + id, {}, this.headers)
 			.then((data: any) => {
 				resolve(JSON.parse(data.data));
 			})
@@ -67,9 +67,9 @@ export class PostService {
 		});
 	}
 
-	desseguir(myId: string, id: string) {
+	desseguir(id: string) {
 		return new Promise((resolve, reject) => {
-			this.http.post(this.API_URL + 'desseguir/' + myId + '/' + id, {}, this.headers)
+			this.http.post(this.API_URL + 'desseguir/' + id, {}, this.headers)
 			.then((data: any) => {
 				resolve(JSON.parse(data.data));
 			})

@@ -73,7 +73,7 @@ export class PerfilPage implements OnInit {
 
   	seguir(){
   		if(this.statusSeguir['id'] == '0' || this.statusSeguir['id'] == '2'){
-			this.postService.seguir(this.myId, this.userId)
+			this.postService.seguir(this.userId)
 				.then((result: any) => {
 					if(result.responseData['success'] == '1'){
 						this.loadPage('data');
@@ -87,7 +87,7 @@ export class PerfilPage implements OnInit {
 				});
   		}
   		else if(this.statusSeguir['id'] == '1'){
-			this.postService.desseguir(this.myId, this.userId)
+			this.postService.desseguir(this.userId)
 				.then((result: any) => {
 					if(result.responseData['success'] == '1'){
 						this.loadPage('data');
