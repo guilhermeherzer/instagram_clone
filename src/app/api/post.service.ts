@@ -43,9 +43,9 @@ export class PostService {
 		});
 	}
 
-	verPerfil(myId: string, id: string) {
+	verPerfil(id: string) {
 		return new Promise((resolve, reject) => {
-			this.http.get(this.API_URL + 'ver_perfil/' + myId + '/' + id, {}, this.headers)
+			this.http.get(this.API_URL + 'ver_perfil/' + id, {}, this.headers)
 			.then((data: any) => {
 				resolve(JSON.parse(data.data));
 			})

@@ -55,7 +55,7 @@ export class PerfilPage implements OnInit {
 			.then(data => {
 				this.myId = data.id;
 
-				this.postService.verPerfil(this.myId, this.userId)
+				this.postService.verPerfil(this.userId)
 					.then((result: any) => {
 						this.user = result.responseData['user'];
 						this.posts = result.responseData['posts'];
