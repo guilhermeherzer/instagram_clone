@@ -1,9 +1,34 @@
-<ion-header [translucent]="true">
-  	<ion-toolbar>
-    	<ion-title>novo_post</ion-title>
-  	</ion-toolbar>
+<ion-header>
+	<ion-toolbar>
+		<ion-title>novo_post</ion-title>
+		<ion-buttons slot="end">
+      		<ion-button fill="clear" (click)="next(imageSelect[1])">Avançar</ion-button>
+    	</ion-buttons>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+	<ion-grid>
+		<ion-row>
+			<ion-col style="padding: 2.5px; height: 287.31px;" size="12">
+				<div style="background-size: cover; width: 100%; height: 100%;" [style.background-image]="'url(' + imageSelect[1] + ')'"></div>
+			</ion-col>
+			<ion-col style="padding: 2.5px; height: 95.77px;" size="3" *ngFor="let library of list;">
+				<div (click)="select(library)" style="background-size: cover; width: 100%; height: 100%;" [style.background-image]="'url(' + library[1] + ')'"></div>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </ion-content>
+
+<ion-footer>
+	<ion-toolbar>
+		<ion-segment (ionChange)="segmentChanged($event)" value="galeria">
+			<ion-segment-button value="galeria">
+				<ion-label>Galeria</ion-label>
+			</ion-segment-button>
+			<ion-segment-button value="foto">
+				<ion-label (click)="takePhoto()">Foto</ion-label>
+			</ion-segment-button>
+		</ion-segment>
+	</ion-toolbar>
+</ion-footer>

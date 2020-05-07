@@ -17,6 +17,10 @@ const routes: Routes = [
   	{
     	path: 'comentarios/:postId',
     	loadChildren: () => import('./comentarios/comentarios.module').then( m => m.ComentariosPageModule)
+  	},
+  	{
+    	path: 'novo-post/:photo',
+    	loadChildren: () => import('./novo-post/novo-post.module').then( m => m.NovoPostPageModule)
   	}
 ];
 @NgModule({
