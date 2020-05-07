@@ -4,15 +4,30 @@
       		<ion-back-button></ion-back-button>
     	</ion-buttons>
     	<ion-title>novo_post</ion-title>
+  		<ion-buttons slot="end">
+      		<ion-button fill="clear" (click)="uploadImg()">Compartilhar</ion-button>
+    	</ion-buttons>
   	</ion-toolbar>
 </ion-header>
 
 <ion-content>
 	<ion-grid>
-		<ion-row>
-			<ion-col>
-				<ion-input></ion-input>
-				<img style="width: 50px" src="{{ photo }}">
+		<ion-row style="border-bottom: 1px solid;">
+			<ion-col style="height: 70px;" size="2.2">
+				<div style="background-size: cover; width: 60px; height: 60px;" [style.background-image]="'url(' + photo + ')'"></div>
+			</ion-col>
+			<ion-col size="9.8">
+				<ion-input [(ngModel)]="legenda"></ion-input>
+			</ion-col>
+		</ion-row>
+		<ion-row style="border-bottom: 1px solid;">
+			<ion-col style="height: 40px;">
+				<ion-label>Marcar pessoas</ion-label>
+			</ion-col>
+		</ion-row>
+		<ion-row style="border-bottom: 1px solid;">
+			<ion-col style="height: 40px;">
+				<ion-label>Adicionar localização</ion-label>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
