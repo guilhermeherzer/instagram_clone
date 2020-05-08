@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
 
 					window.localStorage['token'] = result.responseData['token'];
 
-					this.storage.setItem('data', result.responseData['data']);
+					this.storage.setItem('user', result.responseData['user']);
 
 					this.navCtrl.navigateRoot('/tabs/tab1');
 
