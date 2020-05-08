@@ -67,21 +67,20 @@ export class Tab1Page implements OnInit {
 			loadingElement.present()
 			
 	  		try{
-	  			this.platform.ready()
-	  				.then(() => {
-						this.postService.feed()
-							.then((result: any) => {
-								this.stories = result.responseData['data']['stories']
-								this.posts = result.responseData['data']['posts']
+	  			this.platform.ready().then(() => {
+					this.postService.feed()
+						.then((result: any) => {
+							this.stories = result.responseData['data']['stories']
+							this.posts = result.responseData['data']['posts']
 
-								for(let i = 0; i < result.responseData['data']['posts'].length; i++){
-									this.heartType[i] = this.posts[i].is_liked
-								}
-							})
-							.catch((error: any) => {
-								this.showToast('Erro ao carregar o feed. Erro:' + error.error)
-							})
-					})
+							for(let i = 0; i < result.responseData['data']['posts'].length; i++){
+								this.heartType[i] = this.posts[i].is_liked
+							}
+						})
+						.catch((error: any) => {
+							this.showToast('Erro ao carregar o feed. Erro:' + error.error)
+						})
+				})
 	  		}catch(error){
 	  			console.log(error.error)
 	  		}finally{
