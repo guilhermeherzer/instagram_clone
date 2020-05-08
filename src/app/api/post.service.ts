@@ -22,7 +22,6 @@ export class PostService {
 		return new Promise((resolve, reject) => {
 			this.http.get(this.API_URL + 'meu_perfil/', {}, this.headers)
 			.then((data: any) => {
-				console.log(data.data)
 				resolve(JSON.parse(data.data));
 			})
 			.catch(error => {
