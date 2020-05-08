@@ -40,7 +40,7 @@ export class Tab1Page implements OnInit {
 				private loadingCtrl: LoadingController,
 				private storage: NativeStorage,
 				private postService: PostService,
-				public user: UserService) {
+				private user: UserService) {
 		this.user.getAuth()
 			.then(result => { 
 				this.auth = result 
