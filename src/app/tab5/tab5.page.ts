@@ -8,6 +8,8 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 import { PostService } from './../api/post.service';
 
+import { UserService } from './../api/user.service';
+
 @Component({
 	selector: 'app-tab5',
 	templateUrl: 'tab5.page.html',
@@ -15,73 +17,62 @@ import { PostService } from './../api/post.service';
 })
 export class Tab5Page {
 
-	private loading: any;
-
-	private url = 'http://192.168.0.127/';
-
-	private	myId: string;
-
-	private user = [];
-	private meusPosts = [];
-	private numPosts: string;
-	private numSeguidores: string;
-	private numSeguidos: string;
+	private url = 'http://192.168.0.127/'
+	private	auth: any
+	private meusPosts = []
+	private numPosts: string
+	private numSeguidores: string
+	private numSeguidos: string
 
 	constructor(private router: Router,
 				private loadingCtrl: LoadingController,
 				private toastCtrl: ToastController,
 				private storage: NativeStorage,
-				private postService: PostService) { }
+				private postService: PostService,
+				private user: UserService) {
+		this.user.getAuth()
+			.then(result => { 
+				this.auth = result 
+			})
+	}
 
 	ngOnInit(){
-		this.loadPage();
+		this.loadPage()
 	}
 
 	doRefresh(event) {
-    	setTimeout(() => {
-    		this.loadPage();
-      		event.target.complete();
-    	}, 1000);
+    	this.loadPage()
+      	event.target.complete()
   	}
 
   	async loadPage(){
 		this.loadingCtrl.create({
-			message:"",
 			showBackdrop:false,
 		}).then((loadingElement) => {
-			loadingElement.present();
-			this.loadData('data');
+			loadingElement.present()
+			
+	  		try{
+				this.postService.meuPerfil()
+					.then((result: any) => {
+						this.numPosts = result.responseData['num_posts']
+						this.numSeguidores = result.responseData['num_seguidores']
+						this.numSeguidos = result.responseData['num_seguidos']
+						this.meusPosts = result.responseData['posts']
+					})
+					.catch((error: any) => {
+						console.log(error.error)
+						this.showToast('Erro ao carregar os posts. Erro:' + error.error)
+					})
+	  		}catch(error){
+				console.error(error)
+	  		}finally{
+		    	this.loadingCtrl.dismiss()
+	  		}
 		})
   	}
 
-  	async loadData(name: string){
-  		try{
-			this.storage.getItem(name)
-				.then(data => {
-					this.myId = data.id;
-
-					this.postService.meuPerfil()
-						.then((result: any) => {
-							this.user = result.responseData['user'];
-							this.numPosts = result.responseData['num_posts'];
-							this.numSeguidores = result.responseData['num_seguidores'];
-							this.numSeguidos = result.responseData['num_seguidos'];
-							this.meusPosts = result.responseData['posts'];
-						})
-						.catch((error: any) => {
-							console.log(error.error);
-							this.showToast('Erro ao carregar os posts. Erro:' + error.error);
-						})
-				});
-  		}catch(error){
-			console.error(error);
-  		}finally{
-	    	this.loadingCtrl.dismiss();
-  		}
-  	}
-
 	async showToast(message: string) {
-		const toast = await this.toastCtrl.create({message, duration: 2000, position: 'bottom' });
-		toast.present();
+		const toast = await this.toastCtrl.create({message, duration: 2000, position: 'bottom' })
+		toast.present()
   	}
 }
