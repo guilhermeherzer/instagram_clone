@@ -1,41 +1,29 @@
-<ion-header [translucent]="true">
+<ion-header>
 	<ion-toolbar>
-		<ion-button slot="start" fill="clear" style="color: black;">
-				<ion-icon name="camera-outline"></ion-icon>
-		</ion-button>
 		<ion-title>
 			Instagram
 		</ion-title>
-		<ion-button slot="end" fill="clear" style="color: black;">
-				<ion-icon name="paper-plane-outline"></ion-icon>
-		</ion-button>
 	</ion-toolbar>
 </ion-header>
-
 <ion-content>
   	<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     	<ion-refresher-content
       		pullingIcon="arrow-dropdown"
-      		pullingText="Pull to refresh"
-      		refreshingSpinner="circles">
+      		refreshingSpinner="crescent">
     	</ion-refresher-content>
   	</ion-refresher>
-  	
 	<div class="secao-1">
 		<ion-slides [options]="slideOpts" class="stories">
-			<!--
 			<ion-slide>
 				<div class="col">
 					<div>
 						<div class="storie-user-img">
-							<div class="container" [style.background-image]="'url(' + url + userImg + ')'"></div>
-							
+							<div class="container" [style.background-image]="'url(' + url + auth?.profilePicUrl + ')'"></div>
 						</div>
 						<ion-label>Seu story</ion-label>
 					</div>
 				</div>
 			</ion-slide>
-			-->
 			<ion-slide *ngFor="let storie of stories;">
 				<div class="col">
 					<div>
@@ -48,8 +36,6 @@
 			</ion-slide>
 		</ion-slides>
 	</div>
-	
-
 	<ion-grid class="secao-2" *ngFor="let post of posts; let i=index">
 		<ion-row class="sub-1">
 			<ion-col size="1.5" (click)="verPerfil(post.owner_post.id)">

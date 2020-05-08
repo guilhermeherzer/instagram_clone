@@ -8,12 +8,14 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 import { PostService } from './../api/post.service';
 
+import { UserService } from './../api/user.service';
+
 @Component({
 	selector: 'app-tab1',
 	templateUrl: 'tab1.page.html',
 	styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit {
 
 	// Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
 	slideOpts = {
@@ -27,7 +29,7 @@ export class Tab1Page {
 	};
 
 	private url = 'http://192.168.0.127/'
-	private	myId: string
+	private auth: any
 	private stories = []
 	private posts = []
 	private heartType: any[] = []
@@ -37,17 +39,21 @@ export class Tab1Page {
 				private toastCtrl: ToastController,
 				private loadingCtrl: LoadingController,
 				private storage: NativeStorage,
-				private postService: PostService) {}
+				private postService: PostService,
+				public user: UserService) {
+		this.user.getAuth()
+			.then(result => { 
+				this.auth = result 
+			})
+	}
 
 	ngOnInit(){
 		this.loadPage()
 	}
 
 	doRefresh(event) {
-    	setTimeout(() => {
-    		this.loadPage()
-      		event.target.complete()
-    	}, 1000)
+    	this.loadPage()
+      	event.target.complete()
   	}
 
 	async showToast(message: string) {
@@ -57,42 +63,35 @@ export class Tab1Page {
 
   	async loadPage(){
 		this.loadingCtrl.create({
-			message:"",
-			showBackdrop:false,
 		}).then((loadingElement) => {
 			loadingElement.present()
-			this.loadData('data')
+			
+	  		try{
+	  			this.platform.ready()
+	  				.then(() => {
+						this.postService.feed()
+							.then((result: any) => {
+								this.stories = result.responseData['data']['stories']
+								this.posts = result.responseData['data']['posts']
+
+								for(let i = 0; i < result.responseData['data']['posts'].length; i++){
+									this.heartType[i] = this.posts[i].is_liked
+								}
+							})
+							.catch((error: any) => {
+								this.showToast('Erro ao carregar o feed. Erro:' + error.error)
+							})
+					})
+	  		}catch(error){
+	  			console.log(error.error)
+	  		}finally{
+				this.loadingCtrl.dismiss()
+	  		}
 		})
   	}
 
-  	async loadData(name: string){
-  		try{
-			this.storage.getItem(name)
-				.then(data => {
-					this.myId = data.id
-
-					this.postService.feed()
-						.then((result: any) => {
-							this.stories = result.responseData['data']['stories']
-							this.posts = result.responseData['data']['posts']
-							for(let i = 0; i < result.responseData['data']['posts'].length; i++){
-								this.heartType[i] = this.posts[i].is_liked
-							}
-						})
-						.catch((error: any) => {
-							this.showToast('Erro ao carregar o feed. Erro:' + error.error);
-							console.log(error)
-						})
-				});
-  		}catch(error){
-  			console.log(error.error)
-  		}finally{
-			this.loadingCtrl.dismiss()
-  		}
-  	}
-
   	verPerfil(id: string){
-  		if(id == this.myId){
+  		if(id == this.auth.id){
   			this.router.navigate(['/tabs/tab5'])
   		}else{
   			this.router.navigate(['/tabs/perfil', id])
@@ -106,7 +105,7 @@ export class Tab1Page {
 				this.heartType[i] = result.responseData['is_liked']
 			})
 			.catch((error: any) => {
-				this.showToast('Erro ao curtir a postagem. Erro:' + error.error);
+				this.showToast('Erro ao curtir a postagem. Erro:' + error.error)
 			})
 	}
 }
