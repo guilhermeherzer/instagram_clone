@@ -12,12 +12,13 @@ import { AppComponent } from './app.component';
 import { HTTP } from '@ionic-native/http/ngx';
 
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 
 import { UserService } from './api/user.service';
 
-import {WebView} from '@ionic-native/ionic-webview/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';

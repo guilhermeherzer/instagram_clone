@@ -126,9 +126,9 @@ export class PostService {
 		});
 	}
 
-	publicar(myId: string, img: string, legenda: string) {
+	publicar(formData: FormData) {
 		return new Promise((resolve, reject) => {
-			this.http.post(this.API_URL + 'publicar/' + myId + '/' + img + '/' + legenda, {}, this.headers)
+			this.http.post(this.API_URL + 'publicar', formData, this.headers)
 			.then((data: any) => {
 				resolve(JSON.parse(data.data));
 			})

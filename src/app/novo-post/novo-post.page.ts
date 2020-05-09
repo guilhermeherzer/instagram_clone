@@ -13,7 +13,7 @@ import { File } from '@ionic-native/file/ngx';
 })
 export class NovoPostPage implements OnInit {
 
-	private myId: string
+	private url: string
 	private photo: any
 	private img: string
 	private legenda: string
@@ -36,7 +36,7 @@ export class NovoPostPage implements OnInit {
 		toast.present();
 	}
 
-	share(img) {
+	/*share(img) {
 		this.postService.publicar(this.myId, img, this.legenda)
 		.then((result: any) => {
 			console.log(result)
@@ -44,23 +44,33 @@ export class NovoPostPage implements OnInit {
 		.catch((error: any) => {
 			console.log(error.error)
 		})
-	}
+	}*/
 
-	uploadImg(){
+	share(){
 		//create file transfer FileTransferObject
 		const fileTransfer: FileTransferObject = this.transfer.create();
 
 		var options: FileUploadOptions = {
 			fileKey: 'photo',
-			chunkedMode: false,
 			headers: {
 				'Authorization' : 'Bearer ' + window.localStorage['token']
 			}
 		}
 
-		this.img = 'data:image/jpeg;base64,' + this.photo
+		this.img = encodeURI('data:image/jpeg;base64,' + this.photo)
 
-		fileTransfer.upload(this.img, 'http://192.168.0.127/api/publicar/upload-img', options)
+		this.file.resolveLocalFilesystemUrl(this.img)
+			.then(entry => {
+	    		console.log('cdvfile URI: ' + entry.toInternalURL());
+
+			})
+			.catch(err => {
+	    		console.log('Error: ' + err);
+			})
+
+		this.url = encodeURI('http://192.168.0.127/api/publicar')
+
+		fileTransfer.upload(this.img, this.url, options)
 		.then((data) => {
 			console.log(data)
 		}, (err) => {

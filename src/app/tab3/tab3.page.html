@@ -2,7 +2,7 @@
 	<ion-toolbar>
 		<ion-title>novo_post</ion-title>
 		<ion-buttons slot="end">
-      		<ion-button fill="clear" (click)="next(imageSelect[1])">Avançar</ion-button>
+      		<ion-button fill="clear" (click)="next(imageSelect)">Avançar</ion-button>
     	</ion-buttons>
 	</ion-toolbar>
 </ion-header>
@@ -11,10 +11,10 @@
 	<ion-grid>
 		<ion-row>
 			<ion-col style="padding: 2.5px; height: 287.31px;" size="12">
-				<div style="background-size: cover; width: 100%; height: 100%;" [style.background-image]="'url(' + imageSelect[1] + ')'"></div>
+				<div style="background-size: cover; width: 100%; height: 100%;" [style.background-image]="'url(' + imageSelect + ')'"></div>
 			</ion-col>
 			<ion-col style="padding: 2.5px; height: 95.77px;" size="3" *ngFor="let library of list;">
-				<div (click)="select(library)" style="background-size: cover; width: 100%; height: 100%;" [style.background-image]="'url(' + library[1] + ')'"></div>
+				<div (click)="select(library)" style="background-size: cover; width: 100%; height: 100%;" [style.background-image]="'url(' + library + ')'"></div>
 			</ion-col>
 		</ion-row>
 	</ion-grid>

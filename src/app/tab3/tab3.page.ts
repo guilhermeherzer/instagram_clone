@@ -8,6 +8,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 
+import { File } from '@ionic-native/file/ngx';
+
 @Component({
 	selector: 'app-tab3',
 	templateUrl: './tab3.page.html',
@@ -16,7 +18,7 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 export class Tab3Page implements OnInit  {
 
 	private list = []
-	private imageSelect = []
+	private imageSelect: string
 
 	constructor(private router: Router,
 				private loadingCtrl: LoadingController,
@@ -24,7 +26,8 @@ export class Tab3Page implements OnInit  {
 				private camera: Camera,
 				private sanitizer: DomSanitizer,
 				private platform: Platform,
-				private webview: WebView) {}
+				private webview: WebView,
+				private file: File) {}
 
 	ngOnInit() {
 		this.loadPage()
@@ -42,11 +45,17 @@ export class Tab3Page implements OnInit  {
 							this.photoLibrary.getLibrary().subscribe({
 								next: library => {
 									library['library'].forEach(libraryItem => {
-								        let url: string[] = [
-								        	libraryItem.id.split(";", 2)[0],
-								        	this.webview.convertFileSrc(libraryItem.id.split(";", 2)[1])
-								        ]
-								        this.list.push(url)
+										let url: string = libraryItem.id.split(";", 2)[1]
+										/*
+										let currentName = url.substr(url.lastIndexOf('/') + 1)
+										let currentPath = url.substr(0, url.lastIndexOf('/') + 1)
+
+										let filePath = this.file.dataDirectory + currentName
+										let resPath = this.pathForImage(filePath)
+										*/
+
+										this.list.push(this.pathForImage(url))
+
 										this.imageSelect = this.list[0]
 								    });
 								},
@@ -72,11 +81,12 @@ export class Tab3Page implements OnInit  {
 			destinationType: this.camera.DestinationType.FILE_URI,
 			encodingType: this.camera.EncodingType.JPEG,
 			mediaType: this.camera.MediaType.PICTURE,
+			correctOrientation: true
 		}
 
 		this.camera.getPicture(options)
 		.then((imageData) => {
-			let photo = this.webview.convertFileSrc(imageData)
+			let photo = this.pathForImage(imageData)
 			this.router.navigate(['/novo-post', photo])
 		}, (err) => {
 			console.log(err)
@@ -96,5 +106,14 @@ export class Tab3Page implements OnInit  {
 		if(ev.detail.value == "foto"){
 			this.takePhoto()
 		}
+  	}
+
+  	pathForImage(img){
+  		if(img === null) {
+  			return ';'
+  		} else {
+  			let converted = this.webview.convertFileSrc(img)
+  			return converted
+  		}
   	}
 }
