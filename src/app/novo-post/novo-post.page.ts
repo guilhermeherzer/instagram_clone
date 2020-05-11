@@ -56,13 +56,11 @@ export class NovoPostPage implements OnInit {
 		fileTransfer.upload(this.photo, this.url, options)
 			.then((result: any) => {
 				let data = JSON.parse(result.response)
-				console.log(data.responseData.success)
 				if(data.responseData.success === '1'){
 					this.router.navigate(['/tabs/tab1'])
 				}
 			}, (err) => {
-				console.log(err)
-				this.showToast('Error :' + err.exception)
+				this.showToast('Http Status: ' + err.http_status + ' Code: ' + err.code + ' Source: ' + err.source + ' Body: ' + err.body)
 			})
 	}
 
