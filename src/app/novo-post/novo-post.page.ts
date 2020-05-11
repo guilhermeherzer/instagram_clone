@@ -20,10 +20,11 @@ export class NovoPostPage implements OnInit {
 	private img: string
 	private legenda: string
 
-	constructor(private route: ActivatedRoute,
-		private toastCtrl: ToastController,
-		private postService: PostService,
-		private transfer: FileTransfer, private file: File, private webview: WebView) {
+	constructor(private router: Router,
+				private route: ActivatedRoute,
+				private toastCtrl: ToastController,
+				private postService: PostService,
+				private transfer: FileTransfer, private file: File, private webview: WebView) {
 		this.route.paramMap.subscribe(params => {
 			this.photo = params.get('photo')
 		})
@@ -53,13 +54,16 @@ export class NovoPostPage implements OnInit {
 		this.url = encodeURI('http://192.168.0.127/api/publicar/' + this.legenda)
 
 		fileTransfer.upload(this.photo, this.url, options)
-		.then((data) => {
-			console.log(data)
-			this.showToast('Success :' + data)
-		}, (err) => {
-			console.log(err)
-			this.showToast('Error :' + err.exception)
-		})
+			.then((result: any) => {
+				let data = JSON.parse(result.response)
+				console.log(data.responseData.success)
+				if(data.responseData.success === '1'){
+					this.router.navigate(['/tabs/tab1'])
+				}
+			}, (err) => {
+				console.log(err)
+				this.showToast('Error :' + err.exception)
+			})
 	}
 
   	pathForImage(img){
