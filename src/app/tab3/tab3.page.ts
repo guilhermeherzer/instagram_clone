@@ -18,7 +18,7 @@ import { File } from '@ionic-native/file/ngx';
 export class Tab3Page implements OnInit  {
 
 	private list = []
-	private imageSelect: string
+	private imageSelect: any
 
 	constructor(private router: Router,
 				private loadingCtrl: LoadingController,
@@ -46,15 +46,13 @@ export class Tab3Page implements OnInit  {
 								next: library => {
 									library['library'].forEach(libraryItem => {
 										let url: string = libraryItem.id.split(";", 2)[1]
-										/*
-										let currentName = url.substr(url.lastIndexOf('/') + 1)
-										let currentPath = url.substr(0, url.lastIndexOf('/') + 1)
 
-										let filePath = this.file.dataDirectory + currentName
-										let resPath = this.pathForImage(filePath)
-										*/
+										let photo = {
+											path: this.pathForImage(url),
+											realPath: url
+										}
 
-										this.list.push(this.pathForImage(url))
+										this.list.push(photo)
 
 										this.imageSelect = this.list[0]
 								    });
@@ -86,7 +84,7 @@ export class Tab3Page implements OnInit  {
 
 		this.camera.getPicture(options)
 		.then((imageData) => {
-			let photo = this.pathForImage(imageData)
+			let photo = imageData
 			this.router.navigate(['/novo-post', photo])
 		}, (err) => {
 			console.log(err)

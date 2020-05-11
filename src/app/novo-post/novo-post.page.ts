@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { PostService } from './../api/post.service';
 
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 
@@ -21,14 +23,15 @@ export class NovoPostPage implements OnInit {
 	constructor(private route: ActivatedRoute,
 		private toastCtrl: ToastController,
 		private postService: PostService,
-		private transfer: FileTransfer, private file: File) {
+		private transfer: FileTransfer, private file: File, private webview: WebView) {
+		this.route.paramMap.subscribe(params => {
+			this.photo = params.get('photo')
+		})
 		this.legenda = "";
 	}
 
 	ngOnInit() {
-		this.route.paramMap.subscribe(params => {
-			this.photo = params.get('photo')
-		})
+		this.img = this.pathForImage(this.photo)
 	}
 
 	async showToast(message: string) {
@@ -36,46 +39,35 @@ export class NovoPostPage implements OnInit {
 		toast.present();
 	}
 
-	/*share(img) {
-		this.postService.publicar(this.myId, img, this.legenda)
-		.then((result: any) => {
-			console.log(result)
-		})
-		.catch((error: any) => {
-			console.log(error.error)
-		})
-	}*/
-
 	share(){
-		//create file transfer FileTransferObject
 		const fileTransfer: FileTransferObject = this.transfer.create();
 
 		var options: FileUploadOptions = {
 			fileKey: 'photo',
+			chunkedMode: false,
 			headers: {
 				'Authorization' : 'Bearer ' + window.localStorage['token']
 			}
 		}
 
-		this.img = encodeURI('data:image/jpeg;base64,' + this.photo)
+		this.url = encodeURI('http://192.168.0.127/api/publicar/' + this.legenda)
 
-		this.file.resolveLocalFilesystemUrl(this.img)
-			.then(entry => {
-	    		console.log('cdvfile URI: ' + entry.toInternalURL());
-
-			})
-			.catch(err => {
-	    		console.log('Error: ' + err);
-			})
-
-		this.url = encodeURI('http://192.168.0.127/api/publicar')
-
-		fileTransfer.upload(this.img, this.url, options)
+		fileTransfer.upload(this.photo, this.url, options)
 		.then((data) => {
 			console.log(data)
+			this.showToast('Success :' + data)
 		}, (err) => {
 			console.log(err)
+			this.showToast('Error :' + err.exception)
 		})
 	}
 
+  	pathForImage(img){
+  		if(img === null) {
+  			return ';'
+  		} else {
+  			let converted = this.webview.convertFileSrc(img)
+  			return converted
+  		}
+  	}
 }
