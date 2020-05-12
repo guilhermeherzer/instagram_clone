@@ -16,6 +16,7 @@ export class UserService {
 	private API_URL = 'http://192.168.0.127/api/'
 
 	private headers = {
+		'Authorization' : 'Bearer ' + window.localStorage['token'],
 		'Content-Type': 'application/json',
 		'Accept': 'application/json'
 	};
@@ -50,6 +51,18 @@ export class UserService {
 			}
 
 			this.http.post(this.API_URL + 'cadastrar', data, {})
+				.then((data: any) => {
+				    resolve(JSON.parse(data.data))
+				  })
+				.catch(error => {
+				  	reject(JSON.parse(error.error))
+				})
+		})
+	}
+
+	logout() {
+		return new Promise((resolve, reject) => {
+			this.http.post(this.API_URL + 'logout', {}, this.headers)
 				.then((data: any) => {
 				    resolve(JSON.parse(data.data))
 				  })

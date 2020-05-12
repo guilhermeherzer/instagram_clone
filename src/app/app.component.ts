@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
+import { UserService } from './api/user.service';
+
 @Component({
 	selector: 'app-root',
 	templateUrl: 'app.component.html',
@@ -20,7 +22,8 @@ export class AppComponent {
 		private statusBar: StatusBar,
 		private toastCtrl: ToastController,
 		private navCtrl: NavController,
-		private storage: NativeStorage
+		private storage: NativeStorage,
+		private userService: UserService
 	) {
 		this.initializeApp();
 	}
@@ -38,10 +41,19 @@ export class AppComponent {
 	}
 
 	logout(){
-		window.localStorage.removeItem('token');
-		window.localStorage.removeItem('data');
-		this.navCtrl.navigateRoot('/login');
-		this.showToast('Deslogado com sucesso.');
+		this.userService.logout()
+			.then((result: any) => {
+				if(result.responseData['success'] === '1'){
+					window.localStorage.removeItem('token');
+					window.localStorage.removeItem('data');
+					this.navCtrl.navigateRoot('/login');
+					this.showToast('Deslogado com sucesso.');
+				}
+			})
+			.catch((error: any) => {
+				console.log(error.error)
+				this.showToast('Erro ao deslogar. Erro:' + error.error)
+			})
 	}
 
 	async showToast(message: string) {
