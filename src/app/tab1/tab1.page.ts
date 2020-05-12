@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 
-import { Platform, ToastController, LoadingController } from '@ionic/angular';
+import { Platform, ToastController, LoadingController, AlertController  } from '@ionic/angular';
 
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
@@ -40,7 +40,8 @@ export class Tab1Page implements OnInit {
 				private loadingCtrl: LoadingController,
 				private storage: NativeStorage,
 				private postService: PostService,
-				private user: UserService) {
+				private user: UserService,
+				public alertController: AlertController) {
 		this.user.getAuth()
 			.then(result => { 
 				this.auth = result 
@@ -107,4 +108,57 @@ export class Tab1Page implements OnInit {
 				this.showToast('Erro ao curtir a postagem. Erro:' + error.error)
 			})
 	}
+
+	async options(id) {
+    	const alert = await this.alertController.create({
+    		header: 'Opções',
+      		buttons: [
+		        {
+		          	text: 'Copiar link',
+		          	cssClass: 'button-alert',
+		          	handler: () => {
+		            	console.log('Confirm Copiar link');
+		          	}
+		        },
+		        {
+		          	text: 'Arquivar',
+		          	cssClass: 'button-alert',
+		          	handler: () => {
+		            	console.log('Confirm Arquivar');
+		          	}
+		        },
+		        {
+		          	text: 'Editar',
+		          	cssClass: 'button-alert',
+		          	handler: () => {
+		            	console.log('Confirm Editar');
+		          	}
+		        },
+		        {
+		          	text: 'Excluir',
+		          	cssClass: 'button-alert',
+		          	handler: () => {
+						this.postService.deletePost(id)
+							.then((result: any) => {
+								if(result.responseData['success'] === '1'){
+									this.loadPage()
+								}
+							})
+							.catch((error: any) => {
+								this.showToast('Erro ao excluir a postagem. Erro:' + error.error)
+							})
+		          	}
+		        },
+		        {
+		          	text: 'Desativar comentários',
+		          	cssClass: 'button-alert',
+		          	handler: () => {
+		            	console.log('Confirm Desativar comentários');
+		          	}
+		        },
+		    ]
+    	});
+
+    	await alert.present();
+  	}
 }

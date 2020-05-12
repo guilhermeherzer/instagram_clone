@@ -45,7 +45,7 @@
 				<ion-label class="username">{{ post.owner_post.username }}</ion-label>
 			</ion-col>
 			<ion-col size="1">
-				<ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+				<ion-icon (click)="options(post.id)" name="ellipsis-horizontal-outline"></ion-icon>
 			</ion-col>
 		</ion-row>
 		<ion-row class="sub-2">

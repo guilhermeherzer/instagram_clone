@@ -125,4 +125,16 @@ export class PostService {
 			});
 		});
 	}
+
+	deletePost(postId: string) {
+		return new Promise((resolve, reject) => {
+			this.http.post(this.API_URL + 'publicar/delete/' + postId, {}, this.headers)
+			.then((data: any) => {
+				resolve(JSON.parse(data.data));
+			})
+			.catch(error => {
+				reject(JSON.parse(error.error));
+			});
+		});
+	}
 }
