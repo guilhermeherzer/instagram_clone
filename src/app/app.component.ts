@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 import { Platform, ToastController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -30,11 +30,19 @@ export class AppComponent {
 
 	initializeApp() {
 		this.platform.ready().then(() => {
-			if(window.localStorage['token']){
-        		this.rootPage = this.navCtrl.navigateRoot('/tabs/tab1');
-      		}else{
-        		this.rootPage = this.navCtrl.navigateRoot('/login');
-      		}
+
+			this.storage.getItem('token')
+				.then(data => {
+					let token = data
+
+					if(token){
+						this.rootPage = this.navCtrl.navigateRoot('/tabs/tab1');
+					}
+				})
+				.catch(() => {
+						this.rootPage = this.navCtrl.navigateRoot('/login');
+				})
+
 			this.statusBar.styleDefault();
 			this.splashScreen.hide();
 		});
@@ -44,10 +52,10 @@ export class AppComponent {
 		this.userService.logout()
 			.then((result: any) => {
 				if(result.responseData['success'] === '1'){
-					window.localStorage.removeItem('token');
-					window.localStorage.removeItem('data');
-					this.navCtrl.navigateRoot('/login');
-					this.showToast('Deslogado com sucesso.');
+					this.storage.remove('token')
+					this.storage.remove('user')
+					this.initializeApp();
+					this.showToast('Deslogado com sucesso.')
 				}
 			})
 			.catch((error: any) => {

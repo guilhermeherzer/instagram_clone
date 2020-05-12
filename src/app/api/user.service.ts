@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
-
 @Injectable({
 	providedIn: 'root'
 })
@@ -15,14 +14,23 @@ export class UserService {
 
 	private API_URL = 'http://192.168.0.127/api/'
 
-	private headers = {
-		'Authorization' : 'Bearer ' + window.localStorage['token'],
-		'Content-Type': 'application/json',
-		'Accept': 'application/json'
-	};
+	private token: string = ''
+
+	private headers: any
 
 	constructor(private http: HTTP,
-				private storage: NativeStorage) { }
+				private storage: NativeStorage) {
+		this.storage.getItem('token')
+			.then(data => {
+				this.token = data
+
+				this.headers = {
+					'Authorization' : 'Bearer ' + this.token,
+					'Content-Type': 'application/json',
+					'Accept': 'application/json'
+				};
+			})
+	}
 
 	login(email: string, password: string){
 		return new Promise((resolve, reject) => {
@@ -65,9 +73,11 @@ export class UserService {
 			this.http.post(this.API_URL + 'logout', {}, this.headers)
 				.then((data: any) => {
 				    resolve(JSON.parse(data.data))
+				    console.log(data)
 				  })
 				.catch(error => {
 				  	reject(JSON.parse(error.error))
+				  	console.log(error)
 				})
 		})
 	}

@@ -4,19 +4,31 @@ import { HTTP } from '@ionic-native/http/ngx';
 
 import { Observable } from 'rxjs';
 
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+
 @Injectable({
 	providedIn: 'root'
 })
 export class PostService {
-	private API_URL = 'http://192.168.0.127/api/';
+	private API_URL = 'http://192.168.0.127/api/'
 
-	private headers = {
-		'Authorization' : 'Bearer ' + window.localStorage['token'],
-		'Content-Type': 'application/json',
-		'Accept': 'application/json'
-	};
+	private token: string = ''
 
-	constructor(private http: HTTP) { }
+	private headers: any
+
+	constructor(private http: HTTP,
+				private storage: NativeStorage) {
+		this.storage.getItem('token')
+			.then(data => {
+				this.token = data
+
+				this.headers = {
+					'Authorization' : 'Bearer ' + this.token,
+					'Content-Type': 'application/json',
+					'Accept': 'application/json'
+				};
+			})
+	}
 
 	meuPerfil() {
 		return new Promise((resolve, reject) => {
@@ -35,9 +47,11 @@ export class PostService {
 			this.http.get(this.API_URL + 'feed/', {}, this.headers)
 			.then((data: any) => {
 				resolve(JSON.parse(data.data));
+				console.log(data)
 			})
 			.catch(error => {
 				reject(JSON.parse(error.error));
+				console.log(error)
 			});
 		});
 	}

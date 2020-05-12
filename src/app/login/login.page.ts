@@ -39,7 +39,7 @@ export class LoginPage implements OnInit {
 			.then((result: any) => {
 				if(result.responseData['success'] == '1'){
 
-					window.localStorage['token'] = result.responseData['token'];
+					this.storage.setItem('token', result.responseData['token']);
 
 					this.storage.setItem('user', result.responseData['user']);
 
