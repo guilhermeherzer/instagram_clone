@@ -59,9 +59,9 @@ export class PerfilPage implements OnInit {
   		});
   	}
 
-  	seguir(id){
-  		/*if(id == '0' || id == '2'){
-			this.postService.seguir(this.userId)
+  	seguir(followStatus){
+  		if(followStatus === false){
+			this.postService.seguir(this.data.user.id)
 				.then((result: any) => {
 					if(result.responseData['success'] == '1'){
 						this.loadPage('data');
@@ -73,8 +73,8 @@ export class PerfilPage implements OnInit {
 					console.log(error);
 				});
   		}
-  		else if(id == '1'){
-			this.postService.desseguir(this.userId)
+  		else if(followStatus === true){
+			this.postService.desseguir(this.data.user.id)
 				.then((result: any) => {
 					if(result.responseData['success'] == '1'){
 						this.loadPage('data');
@@ -85,6 +85,6 @@ export class PerfilPage implements OnInit {
 				.catch((error: any) => {
 					console.log(error)
 				});
-  		}*/
+  		}
   	}
 };

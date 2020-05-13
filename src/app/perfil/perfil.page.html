@@ -47,7 +47,7 @@
   		</ion-row>
   		<ion-row class="sub-3">
   			<ion-col>
-  				<ion-button (click)="seguir()">{{ data?.follow_status ? 'Desseguir' : 'Seguir' }}</ion-button>
+  				<ion-button (click)="seguir(data?.follow_status)">{{ data?.follow_status ? 'Desseguir' : 'Seguir' }}</ion-button>
   			</ion-col>
   		</ion-row>
   	</ion-grid>
