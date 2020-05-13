@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastController, LoadingController } from '@ionic/angular';
-import { PostService } from './../api/post.service';
-
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
@@ -23,8 +22,10 @@ export class NovoPostPage implements OnInit {
 	constructor(private router: Router,
 				private route: ActivatedRoute,
 				private toastCtrl: ToastController,
-				private postService: PostService,
-				private transfer: FileTransfer, private file: File, private webview: WebView) {
+				private transfer: FileTransfer, 
+				private file: File, 
+				private webview: WebView,
+				private storage: NativeStorage) {
 		this.route.paramMap.subscribe(params => {
 			this.photo = params.get('photo')
 		})
@@ -41,26 +42,34 @@ export class NovoPostPage implements OnInit {
 	}
 
 	share(){
-		const fileTransfer: FileTransferObject = this.transfer.create();
+		this.storage.getItem('token')
+			.then(res => {
+				let token = res
 
-		var options: FileUploadOptions = {
-			fileKey: 'photo',
-			chunkedMode: false,
-			headers: {
-				'Authorization' : 'Bearer ' + window.localStorage['token']
-			}
-		}
+				const fileTransfer: FileTransferObject = this.transfer.create();
 
-		this.url = encodeURI('http://192.168.0.127/api/publicar/' + this.legenda)
-
-		fileTransfer.upload(this.photo, this.url, options)
-			.then((result: any) => {
-				let data = JSON.parse(result.response)
-				if(data.responseData.success === '1'){
-					this.router.navigate(['/tabs/tab1'])
+				var options: FileUploadOptions = {
+					fileKey: 'photo',
+					chunkedMode: false,
+					headers: {
+						'Authorization' : 'Bearer ' + token
+					}
 				}
-			}, (err) => {
-				this.showToast('Http Status: ' + err.http_status + ' Code: ' + err.code + ' Source: ' + err.source + ' Body: ' + err.body)
+
+				this.url = encodeURI('http://192.168.0.127/api/publicar/' + this.legenda)
+
+				fileTransfer.upload(this.photo, this.url, options)
+					.then((result: any) => {
+						let data = JSON.parse(result.response)
+						if(data.responseData.success === '1'){
+							this.router.navigate(['/tabs/tab1'])
+						}
+					}, (err) => {
+						this.showToast('Http Status: ' + err.http_status + ' Code: ' + err.code + ' Source: ' + err.source + ' Body: ' + err.body)
+					})
+			})
+			.catch(err => {
+				console.log(err)
 			})
 	}
 
