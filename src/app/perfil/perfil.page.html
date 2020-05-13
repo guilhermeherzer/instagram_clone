@@ -1,7 +1,7 @@
 <ion-header [translucent]="true" class="ion-no-border">
 	<ion-toolbar>
 		<ion-title>
-			<ion-label>{{ user.user }}</ion-label>
+			<ion-label>{{ data?.user.username }}</ion-label>
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
@@ -19,35 +19,35 @@
   	<ion-grid class="secao-1">
   		<ion-row class="sub-1">
   			<ion-col size="3.9">
-				<div class="container" [style.background-image]="'url(' + url + user.user_img + ')'"></div>
+				<div class="container" [style.background-image]="'url(' + url + data?.user.profile_pic_url + ')'"></div>
   			</ion-col>
   			<ion-col size="2.7">
   				<div>
-					<ion-label class="num">{{ numPosts }}</ion-label>
+					<ion-label class="num">{{ data?.user.posts.count }}</ion-label>
 					<ion-label>Publicações</ion-label>
 				</div>
   			</ion-col>
   			<ion-col size="2.7">
   				<div>
-					<ion-label class="num">{{ numSeguidores }}</ion-label>
+					<ion-label class="num">{{ data?.user.edge_followed_by.count }}</ion-label>
 					<ion-label>Seguidores</ion-label>
 				</div>
   			</ion-col>
   			<ion-col size="2.7">
   				<div>
-					<ion-label class="num">{{ numSeguidos }}</ion-label>
+					<ion-label class="num">{{ data?.user.edge_follow.count }}</ion-label>
 					<ion-label>Seguindo</ion-label>
 				</div>
   			</ion-col>
   		</ion-row>
   		<ion-row class="sub-2">
   			<ion-col>
-  				<ion-label>{{ user.name }}</ion-label>
+  				<ion-label>{{ data?.user.full_name }}</ion-label>
   			</ion-col>
   		</ion-row>
   		<ion-row class="sub-3">
   			<ion-col>
-  				<ion-button (click)="seguir()">{{ statusSeguir.texto }}</ion-button>
+  				<ion-button (click)="seguir()">{{ data?.follow_status ? 'Desseguir' : 'Seguir' }}</ion-button>
   			</ion-col>
   		</ion-row>
   	</ion-grid>
@@ -63,8 +63,8 @@
 
 	<ion-grid class="secao-3">
 		<ion-row>
-			<ion-col size="4" *ngFor="let post of posts;">
-				<div class="container" [style.background-image]="'url(' + url + post.img + ')'"></div>
+			<ion-col size="4" *ngFor="let post of data?.user.posts.edges;">
+				<div class="container" [style.background-image]="'url(' + url + post.node.display_url + ')'"></div>
 			</ion-col>
 		</ion-row>
 	</ion-grid>

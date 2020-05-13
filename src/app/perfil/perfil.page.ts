@@ -15,10 +15,11 @@ import { PostService } from './../api/post.service';
 })
 export class PerfilPage implements OnInit {
 
-	public user = [];
+	private data: any
+	private url = 'http://192.168.0.127/'
+	/*public user = [];
 	public posts = [];
 
-	private url = 'http://192.168.0.127/';
 
 	private	myId: string;
 	private	userId: string;
@@ -27,19 +28,17 @@ export class PerfilPage implements OnInit {
 	private numSeguidores: string;
 	private numSeguidos: string;
 
-	public statusSeguir = [];
+	public statusSeguir = [];*/
 
   	constructor(public route: ActivatedRoute,
   				public router: Router,
 				public toastCtrl: ToastController,
 				private storage: NativeStorage,
-				private postService: PostService) { }
-
-	ngOnInit(){
-
+				private postService: PostService) {
 		this.loadPage('data');
+  	}
 
-	}
+	ngOnInit(){}
 
 	async showToast(message: string) {
 		const toast = await this.toastCtrl.create({message, duration: 2000, position: 'bottom' });
@@ -48,57 +47,44 @@ export class PerfilPage implements OnInit {
 
   	async loadPage(name: string){
   		this.route.paramMap.subscribe(params => {
-    		this.userId = params.get('userId');
+    		let id = params.get('userId');
+
+			this.postService.verPerfil(id)
+				.then((res: any) => {
+					this.data = res.responseData
+				})
+				.catch((error: any) => {
+					console.log(error);
+				});
   		});
-
-		this.storage.getItem(name)
-			.then(data => {
-				this.myId = data.id;
-
-				this.postService.verPerfil(this.userId)
-					.then((result: any) => {
-						this.user = result.responseData['user'];
-						this.posts = result.responseData['posts'];
-						this.numPosts = result.responseData['num_posts'];
-						this.numSeguidores = result.responseData['num_seguidores'];
-						this.numSeguidos = result.responseData['num_seguidos'];
-						this.statusSeguir = result.responseData['status_seguir'];
-					})
-					.catch((error: any) => {
-						console.log(error.error);
-						this.showToast('Erro ao carregar os posts. Erro:' + error.error);
-					});
-			});
   	}
 
-  	seguir(){
-  		if(this.statusSeguir['id'] == '0' || this.statusSeguir['id'] == '2'){
+  	seguir(id){
+  		/*if(id == '0' || id == '2'){
 			this.postService.seguir(this.userId)
 				.then((result: any) => {
 					if(result.responseData['success'] == '1'){
 						this.loadPage('data');
 					}else if(result.responseData['success'] == '0'){
-						console.log(result.responseData['success']);
+						console.log(result);
 					}
 				})
 				.catch((error: any) => {
-					console.log(error.error);
-					this.showToast('Erro ao tentar seguir. Erro:' + error.error);
+					console.log(error);
 				});
   		}
-  		else if(this.statusSeguir['id'] == '1'){
+  		else if(id == '1'){
 			this.postService.desseguir(this.userId)
 				.then((result: any) => {
 					if(result.responseData['success'] == '1'){
 						this.loadPage('data');
 					}else if(result.responseData['success'] == '0'){
-						console.log(result.responseData['success']);
+						console.log(result);
 					}
 				})
 				.catch((error: any) => {
-					console.log(error.error);
-					this.showToast('Erro ao tentar desseguir. Erro:' + error.error);
+					console.log(error)
 				});
-  		}
+  		}*/
   	}
 };
