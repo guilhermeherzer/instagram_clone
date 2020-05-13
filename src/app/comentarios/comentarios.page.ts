@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ToastController, LoadingController } from '@ionic/angular';
 
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+
+import { UserService } from './../api/user.service';
 
 import { PostService } from './../api/post.service';
 
@@ -13,111 +15,81 @@ import { PostService } from './../api/post.service';
   	templateUrl: './comentarios.page.html',
   	styleUrls: ['./comentarios.page.scss'],
 })
-export class ComentariosPage implements OnInit {
+export class ComentariosPage {
 
-	private loading: any;
-
-	private url = 'http://192.168.0.127/';
-
-	private	myId: string;
-	private	postId: string;
-
-	private	username: string;
-	private	profilePicUrl: string;
-	private	legenda: string;
-
-	private	comentarios: [];
-	
-	private	authProfilePicUrl: string;
-
-	private texto: string;
+	private url = 'http://192.168.0.127/'
+	private auth: any
+	private	data: any
+	private texto: string
 
   	constructor(private route: ActivatedRoute,
   				private router: Router,
 				private loadingCtrl: LoadingController,
 				private toastCtrl: ToastController,
 				private storage: NativeStorage,
+				private user: UserService,
 				private postService: PostService) {
-  		this.texto = '';
-  	}
-
-
-	ngOnInit(){
-		this.loadPage();
-	}
-
-	doRefresh(event) {
-    	setTimeout(() => {
-    		this.loadPage();
-      		event.target.complete();
-    	}, 1000);
-  	}
-
-  	comentar(){
-  		console.log(this.texto);
-		this.postService.comentar(this.postId, this.texto)
-			.then((result: any) => {
-				this.texto = '';
-				this.comentarios = result.responseData['data']['comentarios'];
+		this.user.getAuth()
+			.then(result => { 
+				this.auth = result 
 			})
-			.catch((error: any) => {
-				console.log(error.error);
-				this.showToast('Erro ao carregar os posts. Erro:' + error.error);
-			})
+  		this.texto = ''
+		this.loadPage()
   	}
 
 	async loadPage(){
 		this.loadingCtrl.create({
-			message:"",
 			showBackdrop:false,
 		}).then((loadingElement) => {
 			loadingElement.present();
-			this.loadData('data');
+	  		try{
+	  			this.route.paramMap.subscribe(params => {
+	    				let id = params.get('postId')
+						this.postService.comentarios(id)
+							.then((result: any) => {
+								this.data = result.responseData
+							})
+							.catch((error: any) => {
+								console.log(error)
+							})
+	  			});
+	  		}catch(error){
+				console.error(error)
+	  		}finally{
+		    	this.loadingCtrl.dismiss()
+	  		}
 		})
   	}
 
+  	comentar(){
+		this.postService.comentar(this.data.id, this.texto)
+			.then((result: any) => {
+				this.texto = ''
+				this.data = result.responseData
+			})
+			.catch((error: any) => {
+				console.log(error.error)
+				this.showToast('Erro ao carregar os posts. Erro:' + error.error)
+			})
+  	}
 
-  	async loadData(name: string){
-  		try{
-			this.storage.getItem(name)
-				.then(data => {
-					this.myId = data.id;
-
-		  			this.route.paramMap.subscribe(params => {
-		    				this.postId = params.get('postId');
-		  			});
-
-					this.postService.comentarios(this.postId)
-						.then((result: any) => {
-							this.username = result.responseData['data']['owner_post']['username'];
-							this.profilePicUrl = result.responseData['data']['owner_post']['profile_pic_url'];
-							this.legenda = result.responseData['data']['legenda'];
-
-							this.comentarios = result.responseData['data']['comentarios'];
-							this.authProfilePicUrl = result.responseData['data']['user_auth']['profile_pic_url'];
-						})
-						.catch((error: any) => {
-							console.log(error.error);
-							this.showToast('Erro ao carregar os posts. Erro:' + error.error);
-						})
-				});
-  		}catch(error){
-			console.error(error);
-  		}finally{
-	    	this.loadingCtrl.dismiss();
+  	verPerfil(id: string){
+  		if(id == this.auth.id){
+  			this.router.navigate(['/tabs/tab5'])
+  		}else{
+  			this.router.navigate(['/tabs/perfil', id])
   		}
   	}
 
 	async showToast(message: string) {
-		const toast = await this.toastCtrl.create({message, duration: 2000, position: 'bottom' });
-		toast.present();
+		const toast = await this.toastCtrl.create({message, duration: 2000, position: 'bottom' })
+		toast.present()
   	}
 
-  	verPerfil(id: string){
-  		if(id == this.myId){
-  			this.router.navigate(['/tabs/tab5']);
-  		}else{
-  			this.router.navigate(['/tabs/perfil', id]);
-  		}
+	doRefresh(event) {
+    	setTimeout(() => {
+    		this.loadPage()
+      		event.target.complete()
+    	}, 1000)
   	}
 }
