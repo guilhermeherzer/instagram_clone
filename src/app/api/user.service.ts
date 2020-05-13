@@ -97,10 +97,8 @@ export class UserService {
 					data => {
 						this.auth = new User()
 						this.auth.id = data.id
-						this.auth.name = data.full_name
 						this.auth.username = data.username
 						this.auth.profilePicUrl = data.profile_pic_url
-						this.auth.email = data.email
 
 						resolve(this.auth)
 					}
