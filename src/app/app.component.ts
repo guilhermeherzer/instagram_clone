@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Platform, ToastController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -25,47 +25,51 @@ export class AppComponent {
 		private storage: NativeStorage,
 		private userService: UserService
 	) {
-		this.initializeApp();
+		this.initializeApp()
 	}
 
 	initializeApp() {
 		this.platform.ready().then(() => {
-
 			this.storage.getItem('token')
 				.then(data => {
 					let token = data
 
 					if(token){
-						this.rootPage = this.navCtrl.navigateRoot('/tabs/tab1');
+						this.rootPage = this.navCtrl.navigateRoot('/tabs/tab1')
 					}
 				})
 				.catch(() => {
-						this.rootPage = this.navCtrl.navigateRoot('/login');
+					this.rootPage = this.navCtrl.navigateRoot('/login')
 				})
 
-			this.statusBar.styleDefault();
-			this.splashScreen.hide();
+			this.statusBar.styleDefault()
+			this.splashScreen.hide()
 		});
 	}
 
 	logout(){
 		this.userService.logout()
 			.then((result: any) => {
+				console.log(result)
 				if(result.responseData['success'] === '1'){
-					this.storage.remove('token')
-					this.storage.remove('user')
-					this.initializeApp();
+					this.storage.clear()
+					this.initializeApp()
 					this.showToast('Deslogado com sucesso.')
 				}
 			})
 			.catch((error: any) => {
-				console.log(error.error)
+				console.log(error)
 				this.showToast('Erro ao deslogar. Erro:' + error.error)
 			})
 	}
 
+	destroyStore(){
+		this.storage.clear()
+		this.initializeApp()
+	}
+
 	async showToast(message: string) {
-		const toast = await this.toastCtrl.create({message, duration: 2000, position: 'bottom' });
-		toast.present();
+		const toast = await this.toastCtrl.create({message, duration: 2000, position: 'bottom' })
+		toast.present()
   	}
 }

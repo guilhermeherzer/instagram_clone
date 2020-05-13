@@ -10,26 +10,30 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 	providedIn: 'root'
 })
 export class UserService {
+	private API_URL = 'http://192.168.0.127/api/'
 	public auth: User
 
-	private API_URL = 'http://192.168.0.127/api/'
-
-	private token: string = ''
-
-	private headers: any
-
 	constructor(private http: HTTP,
-				private storage: NativeStorage) {
-		this.storage.getItem('token')
-			.then(data => {
-				this.token = data
+				private storage: NativeStorage) {}
 
-				this.headers = {
-					'Authorization' : 'Bearer ' + this.token,
-					'Content-Type': 'application/json',
-					'Accept': 'application/json'
-				};
-			})
+	getHeaders() {
+		return new Promise((resolve, reject) => {
+			this.storage.getItem('token')
+				.then(res => {
+					let token = res
+
+					let headers = {
+						'Authorization' : 'Bearer ' + token,
+						'Content-Type': 'application/json',
+						'Accept': 'application/json'
+					}
+
+					resolve(headers)
+				})
+				.catch(err => {
+					reject(err)
+				})
+		})
 	}
 
 	login(email: string, password: string){
@@ -41,9 +45,11 @@ export class UserService {
 
 			this.http.post(this.API_URL + 'login', user, {})
 				.then((data: any) => {
+					console.log(data)
 				    resolve(JSON.parse(data.data))
 				  })
 				.catch(error => {
+					console.log(error)
 				  	reject(error.error)
 				})
 		})
@@ -70,15 +76,17 @@ export class UserService {
 
 	logout() {
 		return new Promise((resolve, reject) => {
-			this.http.post(this.API_URL + 'logout', {}, this.headers)
-				.then((data: any) => {
-				    resolve(JSON.parse(data.data))
-				    console.log(data)
-				  })
-				.catch(error => {
-				  	reject(JSON.parse(error.error))
-				  	console.log(error)
-				})
+			this.getHeaders().then((res: any) => {
+				this.http.post(this.API_URL + 'logout', {}, res)
+					.then((data: any) => {
+						console.log(data)
+					    resolve(JSON.parse(data.data))
+					  })
+					.catch(error => {
+						console.log(error)
+					  	reject(JSON.parse(error.error))
+					})
+			})
 		})
 	}
 
