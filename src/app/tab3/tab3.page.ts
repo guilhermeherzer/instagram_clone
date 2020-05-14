@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, LoadingController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
@@ -21,7 +21,6 @@ export class Tab3Page  {
 	private imageSelect: any
 
 	constructor(private router: Router,
-				private loadingCtrl: LoadingController,
 				private photoLibrary: PhotoLibrary,
 				private camera: Camera,
 				private sanitizer: DomSanitizer,

@@ -8,14 +8,12 @@
       		<ion-button fill="clear" (click)="next(imageSelect?.realPath)">Avançar</ion-button>
     	</ion-buttons>
 	</ion-toolbar>
+	<div style="background-size: cover; width: 100%; height: 350px; margin-bottom: 1px;" [style.background-image]="'url(' + imageSelect?.path + ')'"></div>
 </ion-header>
 
 <ion-content>
 	<ion-grid style="margin: -10px">
 		<ion-row>
-			<ion-col style="padding: 1px; height: 287.31px;" size="12">
-				<div style="background-size: cover; width: 100%; height: 100%;" [style.background-image]="'url(' + imageSelect?.path + ')'"></div>
-			</ion-col>
 			<ion-col style="padding: 1px; height: 95.77px;" size="3" *ngFor="let library of list;">
 				<div (click)="select(library)" style="background-size: cover; width: 100%; height: 100%;" [style.background-image]="'url(' + library.path + ')'"></div>
 			</ion-col>
