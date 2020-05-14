@@ -23,6 +23,11 @@ export class LoginPage implements OnInit {
 	) { 
 		this.model = new User();
 		this.model.email = 'guilherme.mr@live.com';
+		//this.model.email = 'agatha.herzer@hotmail.com';
+		//this.model.email = 'romullo.herzer@hotmail.com';
+		//this.model.email = 'alexandre@hotmail.com';
+		//this.model.email = 'pamella@hotmail.com';
+		//this.model.email = 'hinah@hotmail.com';
 		this.model.password = '12345678';
 	}
 
