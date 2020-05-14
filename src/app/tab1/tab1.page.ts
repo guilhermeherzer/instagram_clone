@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 
-import { Platform, ToastController, LoadingController, AlertController  } from '@ionic/angular';
-
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Platform, ToastController, AlertController  } from '@ionic/angular';
 
 import { PostService } from './../api/post.service';
 
@@ -30,15 +28,12 @@ export class Tab1Page implements OnInit {
 
 	private url = 'http://192.168.0.127/'
 	private auth: any
-	private stories = []
-	private posts = []
+	private data: any
 	private heartType: any[] = []
 
 	constructor(private router: Router,
 				private platform: Platform,
 				private toastCtrl: ToastController,
-				private loadingCtrl: LoadingController,
-				private storage: NativeStorage,
 				private postService: PostService,
 				private user: UserService,
 				public alertController: AlertController) {
@@ -46,9 +41,6 @@ export class Tab1Page implements OnInit {
 			.then(result => { 
 				this.auth = result 
 			})
-	}
-
-	ngOnInit(){
 		this.loadPage()
 	}
 
@@ -63,30 +55,18 @@ export class Tab1Page implements OnInit {
   	}
 
   	async loadPage(){
-		this.loadingCtrl.create({
-		}).then((loadingElement) => {
-			loadingElement.present()
-			
-	  		try{
-	  			this.platform.ready().then(() => {
-					this.postService.feed()
-						.then((result: any) => {
-							this.stories = result.responseData['data']['stories']
-							this.posts = result.responseData['data']['posts']
+		this.platform.ready().then(() => {
+			this.postService.feed()
+				.then((result: any) => {
+					this.data = result.responseData
 
-							for(let i = 0; i < result.responseData['data']['posts'].length; i++){
-								this.heartType[i] = this.posts[i].is_liked
-							}
-						})
-						.catch((error: any) => {
-							this.showToast('Erro ao carregar o feed. Erro:' + error.error)
-						})
+					for(let i = 0; i < this.data.posts.length; i++){
+						this.heartType[i] = this.data.posts[i].node.is_liked
+					}
 				})
-	  		}catch(error){
-	  			console.log(error.error)
-	  		}finally{
-				this.loadingCtrl.dismiss()
-	  		}
+				.catch((error: any) => {
+					this.showToast('Erro ao carregar o feed. Erro:' + error.error)
+				})
 		})
   	}
 

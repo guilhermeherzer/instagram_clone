@@ -1,11 +1,13 @@
 <ion-header>
 	<ion-toolbar>
 		<ion-title>
-			Instagram
+			<div class="insta-logo">
+				<img src="http://192.168.0.127/assets/img/logo/instagram.png">
+			</div>
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content *ngIf="data">
   	<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     	<ion-refresher-content
       		pullingIcon="arrow-dropdown"
@@ -14,53 +16,43 @@
   	</ion-refresher>
 	<div class="secao-1">
 		<ion-slides [options]="slideOpts" class="stories">
-			<ion-slide>
-				<div class="col">
-					<div>
-						<div class="storie-user-img">
-							<div class="container" [style.background-image]="'url(' + url + auth?.profilePicUrl + ')'"></div>
-						</div>
-						<ion-label>Seu story</ion-label>
-					</div>
-				</div>
-			</ion-slide>
-			<ion-slide *ngFor="let storie of stories;">
+			<ion-slide *ngFor="let storie of data?.stories;">
 				<div class="col">
 					<div>
 						<div class="storie-user-img gradient-border">
-							<div class="container" [style.background-image]="'url(' + url + storie.user_img + ')'"></div>
+							<div class="container" [style.background-image]="'url(' + url + storie.node.profile_pic_url + ')'"></div>
 						</div>
-						<ion-label>{{ storie.user }}</ion-label>
+						<ion-label>{{ storie.node.username }}</ion-label>
 					</div>
 				</div>
 			</ion-slide>
 		</ion-slides>
 	</div>
-	<ion-grid class="secao-2" *ngFor="let post of posts; let i=index">
+	<ion-grid class="secao-2" *ngFor="let post of data?.posts; let i=index">
 		<ion-row class="sub-1">
-			<ion-col size="1.5" (click)="verPerfil(post.owner_post.id)">
-				<div class="profile-pic-url" [style.background-image]="'url(' + url + post.owner_post.profile_pic_url + ')'"></div>
+			<ion-col size="1.5" (click)="verPerfil(post.node.owner.id)">
+				<div class="profile-pic-url" [style.background-image]="'url(' + url + post.node.owner.profile_pic_url + ')'"></div>
 			</ion-col>
 			<ion-col size="9.5">
-				<ion-label class="username">{{ post.owner_post.username }}</ion-label>
+				<ion-label class="username">{{ post.node.owner.username }}</ion-label>
 			</ion-col>
 			<ion-col size="1">
-				<ion-icon (click)="options(post.id)" name="ellipsis-horizontal-outline"></ion-icon>
+				<ion-icon (click)="options(post.node.id)" name="ellipsis-horizontal-outline"></ion-icon>
 			</ion-col>
 		</ion-row>
 		<ion-row class="sub-2">
 			<ion-col>
-				<img src="{{ url + post.display_url }}">
+				<img src="{{ url + post.node.display_url }}">
 			</ion-col>
 		</ion-row>
 		<ion-row class="sub-3">
 			<ion-col size="2">
-				<ion-button fill="clear" (click)="like(post.id, i)">
+				<ion-button fill="clear" (click)="like(post.node.id, i)">
 					<div [class]="heartType[i] ? 'descurtir' : 'curtir'"></div>
 				</ion-button>
 			</ion-col>
 			<ion-col size="2">
-				<ion-button fill="clear" [routerLink]="['/comentarios', post.id]">
+				<ion-button fill="clear" [routerLink]="['/comentarios', post.node.id]">
 					<div class="comentar"></div>
 				</ion-button>
 			</ion-col>
@@ -75,24 +67,34 @@
 				</ion-button>
 			</ion-col>
 		</ion-row>
-		<ion-row class="sub-4" *ngIf="post.previwe_likes">
+		<ion-row class="sub-4" *ngIf="post.node.previwe_likes">
 			<ion-col>
-				<ion-label>Curtido por <strong>{{ post.preview_likes.username }}</strong> e <strong>outras {{ post.count_likes - 1 }} pessoas</strong></ion-label>
+				<ion-label>Curtido por <strong>{{ post.preview_likes.username }}</strong> e <strong>outras {{ post.node.edge_like_by.count - 1 }} pessoas</strong></ion-label>
 			</ion-col>
 		</ion-row>
 		<ion-row class="sub-5">
 			<ion-col>
-				<ion-label><strong>{{ post.owner_post.username }}</strong> {{ post.legenda }}</ion-label>
+				<ion-label><strong>{{ post.node.owner.username }}</strong> {{ post.node.text }}</ion-label>
 			</ion-col>
 		</ion-row>
-		<ion-row class="sub-6" *ngIf="post.comentarios.length > 2">
+		<ion-row class="sub-6" *ngIf="post.node.edge_media_to_comment.count > 2">
 			<ion-col>
-				<ion-label [routerLink]="['/comentarios', post.id]">Ver todos os {{ post.comentarios_contagem }} comentários</ion-label>
+				<ion-label [routerLink]="['/comentarios', post.node.id]">Ver todos os {{ post.node.edge_media_to_comment.count }} comentários</ion-label>
 			</ion-col>
 		</ion-row>
-		<ion-row class="sub-7" *ngFor="let comentario of post.comentarios | slice:0:2;">
+		<ion-row class="sub-7" *ngFor="let comentario of post.node.comments | slice:0:2;">
 			<ion-col>
-				<ion-label><strong>{{ comentario.user.username }}</strong> {{ comentario.texto }}</ion-label>
+				<ion-label><strong>{{ comentario.node.username }}</strong> {{ comentario.node.text }}</ion-label>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>
+
+<ion-content *ngIf="!data">
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<ion-spinner name="crescent"></ion-spinner>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
