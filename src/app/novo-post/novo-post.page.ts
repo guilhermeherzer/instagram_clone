@@ -56,7 +56,11 @@ export class NovoPostPage implements OnInit {
 					}
 				}
 
-				this.url = encodeURI('http://192.168.0.127/api/publicar/' + this.legenda)
+				if(this.legenda !== ""){
+					this.url = encodeURI('http://192.168.0.127/api/publicar/' + this.legenda)
+				}else{
+					this.url = encodeURI('http://192.168.0.127/api/publicar')
+				}
 
 				fileTransfer.upload(this.photo, this.url, options)
 					.then((result: any) => {
