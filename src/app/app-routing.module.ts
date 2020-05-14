@@ -15,6 +15,10 @@ const routes: Routes = [
 		loadChildren: () => import('./cadastro/cadastro.module').then( m => m.CadastroPageModule)
 	},
   	{
+    	path: 'tab3',
+    	loadChildren: () => import('./tab3/tab3.module').then( m => m.Tab3PageModule)
+  	},
+  	{
     	path: 'comentarios/:postId',
     	loadChildren: () => import('./comentarios/comentarios.module').then( m => m.ComentariosPageModule)
   	},

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Platform, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -15,7 +15,7 @@ import { File } from '@ionic-native/file/ngx';
 	templateUrl: './tab3.page.html',
 	styleUrls: ['./tab3.page.scss'],
 })
-export class Tab3Page implements OnInit  {
+export class Tab3Page  {
 
 	private list = []
 	private imageSelect: any
@@ -27,54 +27,41 @@ export class Tab3Page implements OnInit  {
 				private sanitizer: DomSanitizer,
 				private platform: Platform,
 				private webview: WebView,
-				private file: File) {}
-
-	ngOnInit() {
+				private file: File) {
 		this.loadPage()
 	}
 
 	async loadPage(){
-		this.loadingCtrl.create({
-		}).then((loadingElement) => {
-			loadingElement.present()
-			
-	  		try{
-				this.platform.ready().then(() => {
-					this.photoLibrary.requestAuthorization()
-						.then(() => {
-							this.photoLibrary.getLibrary().subscribe({
-								next: library => {
-									library['library'].forEach(libraryItem => {
-										let url: string = libraryItem.id.split(";", 2)[1]
+		this.platform.ready()
+			.then(() => {
+				this.photoLibrary.requestAuthorization()
+					.then(() => {
+						this.photoLibrary.getLibrary().subscribe({
+							next: library => {
+								library['library'].forEach(libraryItem => {
+									let url: string = libraryItem.id.split(";", 2)[1]
 
-										let photo = {
-											path: this.pathForImage(url),
-											realPath: url
-										}
+									let photo = {
+										path: this.pathForImage(url),
+										realPath: url
+									}
 
-										this.list.push(photo)
+									this.list.push(photo)
 
-										this.imageSelect = this.list[0]
-								    });
-								},
-								error: err => { 
-									console.log('could not get photos') 
-								}
-							})
+									this.imageSelect = this.list[0]
+							    })
+							},
+							error: err => console.log('could not get photos'),
+							complete: () => console.log('complete get photos')
 						})
-						.catch(err => console.log('permissions weren\'t granted'))
-				})
-	  		}catch(error){
-	  			console.log(error.error)
-	  		}finally{
-				this.loadingCtrl.dismiss()
-	  		}
-		})
+					})
+					.catch(err => console.log('permissions weren\'t granted'))
+			})
 	}
 
 	takePhoto() {
 		const options: CameraOptions = {
-			quality: 100,
+			quality: 50,
 			sourceType: this.camera.PictureSourceType.CAMERA,
 			destinationType: this.camera.DestinationType.FILE_URI,
 			encodingType: this.camera.EncodingType.JPEG,
