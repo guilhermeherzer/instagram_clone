@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Router } from '@angular/router';
 
@@ -13,7 +13,7 @@ import { UserService } from './../api/user.service';
 	templateUrl: 'tab1.page.html',
 	styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page implements OnInit {
+export class Tab1Page {
 
 	// Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
 	slideOpts = {
